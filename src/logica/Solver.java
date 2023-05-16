@@ -6,22 +6,21 @@ import objetos.Persona;
 public class Solver
 {
 	private List<Persona> listaPersonas;
-//	private Incompatibilidad incompatibles;
 //	private Requerimientos requerimientos;
 	
 	public void registrarPersona()
 	{
-		
+		throw new RuntimeException("Método no implementado");
 	}
 	
 	public void registrarIncompatibilidad()
 	{
-		
+		throw new RuntimeException("Método no implementado");
 	}
 	
 	public void registrarRequerimientos()
 	{
-		
+		throw new RuntimeException("Método no implementado");
 	}
 	
 	public List<Persona> generarMejorEquipo()
