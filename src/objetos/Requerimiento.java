@@ -6,6 +6,7 @@ public class Requerimiento
 	private int cantArquitectos;
 	private int cantDevelopers;
 	private int cantTesters;
+	private int tamano;
 	
 	public Requerimiento(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters)
 	{
@@ -13,6 +14,7 @@ public class Requerimiento
 		setCantArquitectos(cantArquitectos);
 		setCantDevelopers(cantDevelopers);
 		setCantTesters(cantTesters);
+		setTamano(cantLiderProyecto+cantArquitectos+cantDevelopers+cantTesters);
 	}
 
 	public int getCantLiderProyecto()
@@ -53,5 +55,15 @@ public class Requerimiento
 	public void setCantTesters(int cantTesters)
 	{
 		this.cantTesters = cantTesters;
+	}
+
+	public int getTamano()
+	{
+		return tamano;
+	}
+
+	public void setTamano(int tamanoGrupo)
+	{
+		this.tamano = tamanoGrupo;
 	}
 }

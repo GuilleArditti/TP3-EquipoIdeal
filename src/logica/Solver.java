@@ -1,7 +1,9 @@
 package logica;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
+import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
@@ -10,7 +12,9 @@ public class Solver
 {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
-	private Requerimiento requerimientos;
+	private Grupo actual;
+	private Grupo mayorPuntuacion;
+	private Requerimiento requeridos;
 	
 	public Solver()
 	{
@@ -34,20 +38,27 @@ public class Solver
 	public void registrarRequerimientos(int cantLiderProyecto, int cantArquitectos,
 										int cantDevelopers, int cantTesters)
 	{
-		this.requerimientos = new Requerimiento(cantLiderProyecto, cantArquitectos,
+		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
 												cantDevelopers, cantTesters);
 	}
 	
-	// TODO
-	public List<Persona> generarMejorEquipo()
+	public Set<Persona> generarMejorEquipo()
 	{
-		throw new RuntimeException("Método no implementado");
+
+		actual = new Grupo();
+		mayorPuntuacion = new Grupo();
+		
+		generarDesde(0);
+		
+		return mayorPuntuacion.getPersonas();
 	}
+	
 	
 	public List<Persona> getListaPersonas()
 	{
 		return personas;
 	}
+	
 	
 	public List<Integer> getIncompatibilidades(int id)
 	{
@@ -56,6 +67,28 @@ public class Solver
 	
 	public Requerimiento getRequerimientos()
 	{
-		return requerimientos;
+		return requeridos;
+	}
+	
+	private void generarDesde(int id)
+	{
+		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
+		{
+			if (	actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
+					&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
+					&& actual.getCantDevelopers() == requeridos.getCantDevelopers()
+					&& actual.getCantTesters() == requeridos.getCantTesters())
+			{
+				mayorPuntuacion.clonar(actual);
+			}
+		}
+		else
+		{
+			actual.agregar(personas.get(id));
+			generarDesde(id+1);
+			
+			actual.quitar(personas.get(id));
+			generarDesde(id+1);
+		}
 	}
 }
