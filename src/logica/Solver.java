@@ -6,7 +6,7 @@ import objetos.Persona;
 public class Solver
 {
 	private List<Persona> listaPersonas;
-//	private List<> incompatibles;
+//	private Incompatibilidad incompatibles;
 //	private Requerimientos requerimientos;
 	
 	public void registrarPersona()
