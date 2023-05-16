@@ -1,14 +1,11 @@
 package objetos;
 
-import java.util.List;
-
 public class Persona
 {
 	private int id;
 	private int rendimiento;
 	private String nombre;
 	private Rol rol;
-	private List<Integer> incompatibles;
 	
 	public Persona(int id, int rendimiento, String nombre, Rol rol)
 	{
@@ -35,6 +32,8 @@ public class Persona
 
 	public void setRendimiento(int rendimiento)
 	{
+		if ( rendimiento < 1 || rendimiento > 5 )
+			throw new IllegalArgumentException("El rendimiento debe estar entre 1 - 5");
 		this.rendimiento = rendimiento;
 	}
 	
@@ -56,15 +55,5 @@ public class Persona
 	public void setRol(Rol rol)
 	{
 		this.rol = rol;
-	}
-	
-	public List<Integer> getIncompatibles()
-	{
-		return incompatibles;
-	}
-	
-	public void agregarIncompatible(int id)
-	{
-		incompatibles.add(id);
 	}
 }
