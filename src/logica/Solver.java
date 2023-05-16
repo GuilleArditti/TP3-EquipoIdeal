@@ -1,28 +1,41 @@
 package logica;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import objetos.Incompatibilidad;
 import objetos.Persona;
 import objetos.Requerimiento;
+import objetos.Rol;
 
 public class Solver
 {
-	private List<Persona> listaPersonas;
-	private List<Integer> incompatibilidades;
+	private Set<Persona> listaPersonas;
+	private List<Incompatibilidad> incompatibilidades;
 	private Requerimiento requerimientos;
 	
-	public void registrarPersona()
+	public Solver()
 	{
-		throw new RuntimeException("Método no implementado");
+		listaPersonas = new HashSet<Persona>();
+		incompatibilidades = new ArrayList<Incompatibilidad>();
 	}
 	
-	public void registrarIncompatibilidad()
+	public void registrarPersona(int id, int rendimiento, String nombre, Rol rol)
 	{
-		throw new RuntimeException("Método no implementado");
+		listaPersonas.add(new Persona(id, rendimiento, nombre, rol));
 	}
 	
-	public void registrarRequerimientos()
+	public void registrarIncompatibilidad(int id1, int id2)
 	{
-		throw new RuntimeException("Método no implementado");
+		incompatibilidades.add(new Incompatibilidad(id1, id2));
+	}
+	
+	public void registrarRequerimientos(int cantLiderProyecto, int cantArquitectos,
+										int cantDevelopers, int cantTesters)
+	{
+		this.requerimientos = new Requerimiento(cantLiderProyecto, cantArquitectos,
+												cantDevelopers, cantTesters);
 	}
 	
 	public List<Persona> generarMejorEquipo()
@@ -30,12 +43,12 @@ public class Solver
 		throw new RuntimeException("Método no implementado");
 	}
 	
-	public List<Persona> getListaPersonas()
+	public Set<Persona> getListaPersonas()
 	{
 		return listaPersonas;
 	}
 	
-	public List<Integer> getIncompatibilidades()
+	public List<Incompatibilidad> getIncompatibilidades()
 	{
 		return incompatibilidades;
 	}
