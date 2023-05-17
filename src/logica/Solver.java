@@ -22,9 +22,9 @@ public class Solver
 		incompatibles = new ArrayList<>();
 	}
 	
-	public void registrarPersona(int id, int rendimiento, String nombre, Rol rol)
+	public void registrarPersona(int rendimiento, String nombre, Rol rol)
 	{
-		personas.add(new Persona(id, rendimiento, nombre, rol));
+		personas.add(new Persona(personas.size(), rendimiento, nombre, rol));
 	}
 	
 	public void registrarIncompatibilidad(int id, int idIncompatible)
@@ -32,7 +32,7 @@ public class Solver
 		if ( incompatibles.get(id) == null )
 			incompatibles.add(id, new ArrayList<Integer>());
 		
-		incompatibles.get(id).add(idIncompatible);	
+		incompatibles.get(id).add(idIncompatible);
 	}
 	
 	public void registrarRequerimientos(int cantLiderProyecto, int cantArquitectos,
@@ -74,10 +74,9 @@ public class Solver
 	{
 		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
 		{
-			if (	actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
-					&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
-					&& actual.getCantDevelopers() == requeridos.getCantDevelopers()
-					&& actual.getCantTesters() == requeridos.getCantTesters())
+			if (		cumpleTodosRequisitos()
+					&& 	actual.getPuntuacion() > mayorPuntuacion.getPuntuacion()
+					&& 	!hayConflicto(id, actual.getPersonas()) )
 			{
 				mayorPuntuacion.clonar(actual);
 			}
@@ -90,5 +89,24 @@ public class Solver
 			actual.quitar(personas.get(id));
 			generarDesde(id+1);
 		}
+	}
+
+	private boolean hayConflicto(int id, Set<Persona> personas2) {
+		for (Persona persona : personas2)
+		{
+			if (incompatibles.get(id).contains(persona.getId()))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean cumpleTodosRequisitos() {
+		return actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
+				&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
+				&& actual.getCantDevelopers() == requeridos.getCantDevelopers()
+				&& actual.getCantTesters() == requeridos.getCantTesters();
 	}
 }

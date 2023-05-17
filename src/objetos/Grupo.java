@@ -9,6 +9,7 @@ public class Grupo {
 	private int cantDevelopers;
 	private int cantTesters;
 	private int tamano;
+	private int puntuacion;
 	private Set<Persona> personas;
 
 	public Grupo() {
@@ -18,6 +19,7 @@ public class Grupo {
 	public void agregar(Persona persona) {
 		personas.add(persona);
 		tamano++;
+		setPuntuacion(getPuntuacion() + persona.getRendimiento());
 		
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
@@ -34,6 +36,7 @@ public class Grupo {
 	public void quitar(Persona persona) {
 		personas.remove(persona);
 		tamano--;
+		setPuntuacion(getPuntuacion() - persona.getRendimiento());
 		
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
@@ -102,5 +105,13 @@ public class Grupo {
 
 	public void setPersonas(Set<Persona> personas) {
 		this.personas = personas;
+	}
+
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 }
