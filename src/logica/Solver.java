@@ -72,6 +72,7 @@ public class Solver
 	
 	private void generarDesde(int id)
 	{
+		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
 		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
 		{
 			if (		cumpleTodosRequisitos()
@@ -81,14 +82,17 @@ public class Solver
 				mayorPuntuacion.clonar(actual);
 			}
 		}
-		else
-		{
-			actual.agregar(personas.get(id));
-			generarDesde(id+1);
+		
+		// caso base 2 : si hay conflicto entre la persona a agregar y las que ya están en actual
+		if (hayConflicto(id, actual.getPersonas()))
+			return;
+		
+		actual.agregar(personas.get(id));
+		generarDesde(id+1);
 			
-			actual.quitar(personas.get(id));
-			generarDesde(id+1);
-		}
+		actual.quitar(personas.get(id));
+		generarDesde(id+1);
+		
 	}
 
 	private boolean hayConflicto(int id, Set<Persona> personas2) {
