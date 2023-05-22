@@ -24,12 +24,16 @@ public class Grupo {
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
 			cantLiderProyecto++;
+			break;
 		case ARQUITECTO:
 			cantArquitectos++;
+			break;
 		case PROGRAMADOR:
 			cantDevelopers++;
+			break;
 		case TESTER:
 			cantTesters++;
+			break;
 		}
 	}
 	
