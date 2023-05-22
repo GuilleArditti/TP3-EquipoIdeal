@@ -55,8 +55,14 @@ public class Grupo {
 		personas = new HashSet<Persona>();
 		for (Persona persona : otro.personas)
 		{
-			personas.add(persona);
+			this.agregar(persona);
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Grupo [tamano=" + tamano + ", puntuacion=" + puntuacion + ",\n personas=" + personas + "]\n";
 	}
 
 	public int getCantLiderProyecto() {
