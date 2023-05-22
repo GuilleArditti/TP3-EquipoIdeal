@@ -8,15 +8,13 @@ import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
 
-public class Solver
+public class GeneradorGrupoMejorCalificado
 {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
-	private Grupo actual;
-	private Grupo mayorPuntuacion;
 	private Requerimiento requeridos;
 	
-	public Solver()
+	public GeneradorGrupoMejorCalificado()
 	{
 		personas = new ArrayList<>();
 		incompatibles = new ArrayList<>();
@@ -42,15 +40,9 @@ public class Solver
 												cantDevelopers, cantTesters);
 	}
 	
-	public Set<Persona> generarMejorEquipo()
+	public Set<Persona> generarMejorEquipo(Set<Persona> getListaPersonas)
 	{
-
-		actual = new Grupo();
-		mayorPuntuacion = new Grupo();
-		
-		generarDesde(0);
-		
-		return mayorPuntuacion.getPersonas();
+		throw new RuntimeException("Método no implementado");
 	}
 	
 	
@@ -70,26 +62,7 @@ public class Solver
 		return requeridos;
 	}
 	
-	private void generarDesde(int id)
-	{
-		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
-		if (id == personas.size() || actual.getTamano() == requeridos.getTamano()) {
-			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
-				mayorPuntuacion.clonar(actual);
-			return;
-		}
-		
-		// caso base 2 : si hay conflicto entre la persona a agregar y las que ya están en actual
-		if (hayConflicto(id, actual.getPersonas()))
-			return;
-		
-		actual.agregar(personas.get(id));
-		generarDesde(id+1);
-			
-		actual.quitar(personas.get(id));
-		generarDesde(id+1);
-		
-	}
+	
 
 	private boolean hayConflicto(int id, Set<Persona> personas2) {
 		for (Persona persona : personas2)
@@ -103,10 +76,5 @@ public class Solver
 		return false;
 	}
 
-	private boolean cumpleTodosRequisitos() {
-		return actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
-				&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
-				&& actual.getCantDevelopers() == requeridos.getCantDevelopers()
-				&& actual.getCantTesters() == requeridos.getCantTesters();
-	}
+	
 }
