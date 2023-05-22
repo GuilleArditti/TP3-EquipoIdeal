@@ -20,12 +20,12 @@ public class GeneradorGrupoMejorCalificado
 		incompatibles = new ArrayList<>();
 	}
 	
-	public void registrarPersona(int rendimiento, String nombre, Rol rol)
+	public void agregarPersona(int rendimiento, String nombre, Rol rol)
 	{
 		personas.add(new Persona(personas.size(), rendimiento, nombre, rol));
 	}
 	
-	public void registrarIncompatibilidad(int id, int idIncompatible)
+	public void agregarIncompatibilidad(int id, int idIncompatible)
 	{
 		if ( incompatibles.get(id) == null )
 			incompatibles.add(id, new ArrayList<Integer>());
@@ -33,7 +33,7 @@ public class GeneradorGrupoMejorCalificado
 		incompatibles.get(id).add(idIncompatible);
 	}
 	
-	public void registrarRequerimientos(int cantLiderProyecto, int cantArquitectos,
+	public void agregarRequerimientos(int cantLiderProyecto, int cantArquitectos,
 										int cantDevelopers, int cantTesters)
 	{
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
