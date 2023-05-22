@@ -30,6 +30,17 @@ public class GeneradorGrupoMejorCalificadoTest {
 	
 	@Test
 	public void generarMejorEquipoTest() {
-		fail("Not yet implemented");
+		generador.agregarPersona(4, "Juan Perez", Rol.LIDER_DE_PROYECTO);
+		generador.agregarPersona(5, "Roberto Gomez", Rol.LIDER_DE_PROYECTO);
+		
+		generador.agregarPersona(3, "Micaela Robles", Rol.ARQUITECTO);
+		generador.agregarPersona(4, "Marcelo Rodriguez", Rol.ARQUITECTO);
+		generador.agregarPersona(5, "Esteban Quito", Rol.ARQUITECTO);
+		
+		generador.agregarPersona(3, "Braian Davico", Rol.PROGRAMADOR);
+		generador.agregarPersona(3, "Bruno Avila", Rol.PROGRAMADOR);
+		generador.agregarPersona(3, "Norberto Beltrán", Rol.PROGRAMADOR);
+		
+		generador.setRequerimientos(1, 2, 2, 2);
 	}
 }

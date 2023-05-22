@@ -22,13 +22,20 @@ public class Persona
 		return "Persona [id=" + id + ", rendimiento=" + rendimiento
 				+ ", nombre=" + nombre + ", rol=" + rol + "]";
 	}
+	
+	public boolean equals(Persona otra)
+	{
+		return this.rendimiento == otra.getRendimiento()
+				&& this.nombre.equals(otra.getNombre())
+				&& this.rol.equals(otra.getRol());
+	}
 
 	public int getId()
 	{
 		return id;
 	}
 
-	public void setId(int id)
+	private void setId(int id)
 	{
 		this.id = id;
 	}
