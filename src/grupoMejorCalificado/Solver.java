@@ -6,7 +6,7 @@ import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
 
-public class Solver
+public class Solver implements Runnable
 {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
@@ -23,17 +23,22 @@ public class Solver
 		setRequeridos(requeridos);
 	}
 	
-	public Set<Persona> generarMejorEquipo()
+	public void run()
 	{
-
 		actual = new Grupo();
 		mayorPuntuacion = new Grupo();
 		
 		generarDesde(0);
-		
-		return mayorPuntuacion.getPersonas();
 	}
-	
+	/*
+	public void generarMejorEquipo()
+	{
+		actual = new Grupo();
+		mayorPuntuacion = new Grupo();
+		
+		generarDesde(0);
+	}
+	*/
 	private void generarDesde(int id)
 	{
 		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido

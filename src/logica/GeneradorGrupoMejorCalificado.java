@@ -43,7 +43,9 @@ public class GeneradorGrupoMejorCalificado
 	public Set<Persona> generarMejorEquipo()
 	{
 		Solver solver = new Solver(personas, incompatibles, requeridos);
-		return solver.generarMejorEquipo();
+		solver.run();
+		
+		return solver.getMayorPuntuacion().getPersonas();
 	}
 	
 	public List<Persona> getListaPersonas()
