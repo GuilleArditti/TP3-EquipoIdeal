@@ -59,7 +59,6 @@ public class GeneradorGrupoMejorCalificadoTest {
 		for (Persona persona : resultado)
 			rendimientoGlobal += persona.getRendimiento();
 		
-		System.out.println(rendimientoGlobal);
 		assertEquals(rendimientoGlobal, 23);
 	}
 }
