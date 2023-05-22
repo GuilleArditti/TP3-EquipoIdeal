@@ -1,9 +1,13 @@
 package logica;
 
 import static org.junit.Assert.*;
+
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import objetos.Rol;
+import objetos.Persona;
 
 public class GeneradorGrupoMejorCalificadoTest {
 	private GeneradorGrupoMejorCalificado generador;
@@ -38,9 +42,24 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarPersona(5, "Esteban Quito", Rol.ARQUITECTO);
 		
 		generador.agregarPersona(3, "Braian Davico", Rol.PROGRAMADOR);
-		generador.agregarPersona(3, "Bruno Avila", Rol.PROGRAMADOR);
-		generador.agregarPersona(3, "Norberto Beltrán", Rol.PROGRAMADOR);
+		generador.agregarPersona(4, "Bruno Avila", Rol.PROGRAMADOR);
+		generador.agregarPersona(5, "Norberto Beltrán", Rol.PROGRAMADOR);
+		
+		generador.agregarPersona(5, "Natalia Infante", Rol.TESTER);
+		generador.agregarPersona(5, "Romina Herrera", Rol.TESTER);
+		generador.agregarPersona(4, "Miguel Britez", Rol.TESTER);
+		
+		generador.agregarIncompatibilidad(8, 9);
 		
 		generador.setRequerimientos(1, 2, 2, 2);
+		Set<Persona> resultado = generador.generarMejorEquipo();
+		
+		int rendimientoGlobal = 0;
+		
+		for (Persona persona : resultado)
+			rendimientoGlobal += persona.getRendimiento();
+		
+		System.out.println(rendimientoGlobal);
+		assertEquals(rendimientoGlobal, 23);
 	}
 }
