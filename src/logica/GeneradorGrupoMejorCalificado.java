@@ -2,8 +2,8 @@ package logica;
 
 import java.util.List;
 import java.util.Set;
+import grupoMejorCalificado.Solver;
 import java.util.ArrayList;
-import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
@@ -40,17 +40,16 @@ public class GeneradorGrupoMejorCalificado
 												cantDevelopers, cantTesters);
 	}
 	
-	public Set<Persona> generarMejorEquipo(Set<Persona> getListaPersonas)
+	public Set<Persona> generarMejorEquipo()
 	{
-		throw new RuntimeException("Método no implementado");
+		Solver solver = new Solver(personas, incompatibles, requeridos);
+		return solver.generarMejorEquipo();
 	}
-	
 	
 	public List<Persona> getListaPersonas()
 	{
 		return personas;
 	}
-	
 	
 	public List<Integer> getIncompatibilidades(int id)
 	{
@@ -61,20 +60,4 @@ public class GeneradorGrupoMejorCalificado
 	{
 		return requeridos;
 	}
-	
-	
-
-	private boolean hayConflicto(int id, Set<Persona> personas2) {
-		for (Persona persona : personas2)
-		{
-			if (incompatibles.get(id).contains(persona.getId()))
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	
 }

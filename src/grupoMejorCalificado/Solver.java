@@ -1,5 +1,6 @@
 package grupoMejorCalificado;
 
+import java.util.List;
 import java.util.Set;
 import objetos.Grupo;
 import objetos.Persona;
@@ -7,25 +8,36 @@ import objetos.Requerimiento;
 
 public class Solver
 {
+	private List<Persona> personas;
+	private List<List<Integer>> incompatibles;
+	private Requerimiento requeridos;
 	private Grupo actual;
 	private Grupo mayorPuntuacion;
-	private Requerimiento requeridos;
-	/**
-	public Set<Persona> generarMejorEquipo(Set<Persona> getListaPersonas)
+	
+	public Solver(	List<Persona> personas,
+					List<List<Integer>> incompatibles,
+					Requerimiento requeridos)
+	{
+		setPersonas(personas);
+		setIncompatibles(incompatibles);
+		setRequeridos(requeridos);
+	}
+	
+	public Set<Persona> generarMejorEquipo()
 	{
 
 		actual = new Grupo();
 		mayorPuntuacion = new Grupo();
 		
-		generarDesde(0, getListaPersonas);
+		generarDesde(0);
 		
 		return mayorPuntuacion.getPersonas();
 	}
 	
-	private void generarDesde(int id, Set<Persona> getListaPersonas)
+	private void generarDesde(int id)
 	{
 		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
-		if (id == getListaPersonas.size() || actual.getTamano() == requeridos.getTamano()) {
+		if (id == personas.size() || actual.getTamano() == requeridos.getTamano()) {
 			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
 				mayorPuntuacion.clonar(actual);
 			return;
@@ -40,13 +52,42 @@ public class Solver
 			
 		actual.quitar(personas.get(id));
 		generarDesde(id+1);
-		
-	}*/
+	}
 	
-	private boolean cumpleTodosRequisitos() {
+	private boolean cumpleTodosRequisitos()
+	{
 		return actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
 				&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
 				&& actual.getCantDevelopers() == requeridos.getCantDevelopers()
 				&& actual.getCantTesters() == requeridos.getCantTesters();
+	}
+	
+	private boolean hayConflicto(int id, Set<Persona> personas)
+	{
+		for (Persona persona : personas)
+			if (incompatibles.get(id).contains(persona.getId()))
+				return true;
+			
+		return false;
+	}
+
+	public void setPersonas(List<Persona> personas)
+	{
+		this.personas = personas;
+	}
+
+	public void setIncompatibles(List<List<Integer>> incompatibles)
+	{
+		this.incompatibles = incompatibles;
+	}
+
+	public void setRequeridos(Requerimiento requeridos)
+	{
+		this.requeridos = requeridos;
+	}
+
+	public Grupo getMayorPuntuacion()
+	{
+		return mayorPuntuacion;
 	}
 }
