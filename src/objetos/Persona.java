@@ -23,8 +23,11 @@ public class Persona
 				+ ", nombre=" + nombre + ", rol=" + rol + "]";
 	}
 	
-	public boolean equals(Persona otra)
+	@Override
+	public boolean equals(Object other)
 	{
+		Persona otra = (Persona) other;
+		
 		return this.rendimiento == otra.getRendimiento()
 				&& this.nombre.equals(otra.getNombre())
 				&& this.rol.equals(otra.getRol());
