@@ -29,11 +29,6 @@ public class GeneradorGrupoMejorCalificadoTest {
 	}
 	
 	@Test
-	public void agregarRequerimientosTest() {
-		fail("Not yet implemented");
-	}
-	
-	@Test
 	public void generarMejorEquipoTest() {
 		fail("Not yet implemented");
 	}

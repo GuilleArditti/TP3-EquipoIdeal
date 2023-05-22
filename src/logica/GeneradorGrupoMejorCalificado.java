@@ -31,7 +31,7 @@ public class GeneradorGrupoMejorCalificado
 		incompatibles.get(id).add(idIncompatible);
 	}
 	
-	public void agregarRequerimientos(int cantLiderProyecto, int cantArquitectos,
+	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos,
 										int cantDevelopers, int cantTesters)
 	{
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
