@@ -7,6 +7,7 @@ import objetos.Rol;
 
 public class GeneradorGrupoMejorCalificadoTest {
 	private GeneradorGrupoMejorCalificado generador;
+	
 
 	@Before
 	public void setup() {
@@ -16,12 +17,15 @@ public class GeneradorGrupoMejorCalificadoTest {
 	@Test
 	public void agregarPersonaTest() {
 		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
-		assertEquals(generador.getListaPersonas().size(), 1);
+		generador.agregarPersona(4, "Juan Gomez", Rol.ARQUITECTO);
+		assertEquals(generador.getListaPersonas().size(), 2);
 	}
 
 	@Test
 	public void agregarIncompatibilidadTest() {
-		fail("Not yet implemented");
+		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+		generador.agregarIncompatibilidad(0, 1);
+		assertTrue(generador.getIncompatibilidades(0).contains(1));
 	}
 	
 	@Test

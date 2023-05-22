@@ -23,13 +23,11 @@ public class GeneradorGrupoMejorCalificado
 	public void agregarPersona(int rendimiento, String nombre, Rol rol)
 	{
 		personas.add(new Persona(personas.size(), rendimiento, nombre, rol));
+		incompatibles.add(new ArrayList<>());
 	}
 	
 	public void agregarIncompatibilidad(int id, int idIncompatible)
 	{
-		if ( incompatibles.get(id) == null )
-			incompatibles.add(id, new ArrayList<Integer>());
-		
 		incompatibles.get(id).add(idIncompatible);
 	}
 	
