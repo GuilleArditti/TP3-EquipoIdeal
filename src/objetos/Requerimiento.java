@@ -22,7 +22,7 @@ public class Requerimiento
 		return cantLiderProyecto;
 	}
 	
-	public void setCantLiderProyecto(int cantLiderProyecto)
+	private void setCantLiderProyecto(int cantLiderProyecto)
 	{
 		this.cantLiderProyecto = cantLiderProyecto;
 	}
@@ -32,7 +32,7 @@ public class Requerimiento
 		return cantArquitectos;
 	}
 	
-	public void setCantArquitectos(int cantArquitectos)
+	private void setCantArquitectos(int cantArquitectos)
 	{
 		this.cantArquitectos = cantArquitectos;
 	}
@@ -42,7 +42,7 @@ public class Requerimiento
 		return cantDevelopers;
 	}
 	
-	public void setCantDevelopers(int cantDevelopers)
+	private void setCantDevelopers(int cantDevelopers)
 	{
 		this.cantDevelopers = cantDevelopers;
 	}
@@ -52,7 +52,7 @@ public class Requerimiento
 		return cantTesters;
 	}
 	
-	public void setCantTesters(int cantTesters)
+	private void setCantTesters(int cantTesters)
 	{
 		this.cantTesters = cantTesters;
 	}
@@ -62,7 +62,7 @@ public class Requerimiento
 		return tamano;
 	}
 
-	public void setTamano(int tamanoGrupo)
+	private void setTamano(int tamanoGrupo)
 	{
 		this.tamano = tamanoGrupo;
 	}
