@@ -56,7 +56,14 @@ public class Grupo {
 	
 	public void clonar(Grupo otro)
 	{
-		personas = new HashSet<Persona>();
+		setCantLiderProyecto(0);
+		setCantArquitectos(0);
+		setCantDevelopers(0);
+		setCantTesters(0);
+		setTamano(0);
+		setPuntuacion(0);
+		setPersonas(new HashSet<>());
+		
 		for (Persona persona : otro.personas)
 		{
 			this.agregar(persona);
