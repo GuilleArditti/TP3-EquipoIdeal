@@ -28,8 +28,9 @@ public class GeneradorGrupoMejorCalificadoTest {
 	@Test
 	public void agregarIncompatibilidadTest() {
 		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+		generador.agregarPersona(4, "Eusebio Zamora", Rol.TESTER);
 		generador.agregarIncompatibilidad(0, 1);
-		assertTrue(generador.getIncompatibilidades(0).contains(1));
+		assertTrue(generador.getIncompatibilidadesById(0).contains(1));
 	}
 	
 	@Test
@@ -59,6 +60,6 @@ public class GeneradorGrupoMejorCalificadoTest {
 		for (Persona persona : resultado)
 			rendimientoGlobal += persona.getRendimiento();
 		
-		assertEquals(33, rendimientoGlobal);
+		assertEquals(32, rendimientoGlobal);
 	}
 }

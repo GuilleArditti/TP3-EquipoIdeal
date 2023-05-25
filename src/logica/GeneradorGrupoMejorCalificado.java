@@ -28,7 +28,13 @@ public class GeneradorGrupoMejorCalificado
 	
 	public void agregarIncompatibilidad(int id, int idIncompatible)
 	{
+		if (id >= incompatibles.size())
+			throw new RuntimeException("ID no válido: " + id);
+		if (idIncompatible >= incompatibles.size())
+			throw new RuntimeException("ID no válido: " + idIncompatible);
+		
 		incompatibles.get(id).add(idIncompatible);
+		incompatibles.get(idIncompatible).add(id);
 	}
 	
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos,
@@ -51,9 +57,14 @@ public class GeneradorGrupoMejorCalificado
 		return personas;
 	}
 	
-	public List<Integer> getIncompatibilidades(int id)
+	public List<Integer> getIncompatibilidadesById(int id)
 	{
 		return incompatibles.get(id);
+	}
+	
+	public List<List<Integer>> getIncompatibilidades()
+	{
+		return incompatibles;
 	}
 	
 	public Requerimiento getRequerimientos()
