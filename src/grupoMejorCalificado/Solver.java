@@ -34,27 +34,7 @@ public class Solver implements Runnable
 		mayorPuntuacion = new Grupo();
 		
 		generarDesde(0);
-//		gd1(0);
 	}
-	
-//	private void gd1(int id)
-//	{
-//		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
-//		{
-//			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
-//				mayorPuntuacion.clonar(actual);
-//			return;
-//		}
-//		
-//		if (hayConflicto(id, actual.getPersonas()))
-//			return;
-//		
-//		actual.agregar(personas.get(id));
-//		gd1(id+1);
-//		
-//		actual.quitar(personas.get(id));
-//		gd1(id+1);
-//	}
 	
 	private void generarDesde(int id)
 	{
