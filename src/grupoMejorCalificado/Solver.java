@@ -33,53 +33,50 @@ public class Solver implements Runnable
 		actual = new Grupo();
 		mayorPuntuacion = new Grupo();
 		
-//		generarDesde(0);
-		gd1(0);
+		generarDesde(0);
+//		gd1(0);
 	}
 	
-	private void gd1(int id)
-	{
-		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
-		{
-			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
-				mayorPuntuacion.clonar(actual);
-			return;
-		}
-		
-		if (hayConflicto(id, actual.getPersonas()))
-			return;
-		
-		actual.agregar(personas.get(id));
-		gd1(id+1);
-		
-		actual.quitar(personas.get(id));
-		gd1(id+1);
-	}
-	
-//	private void generarDesde(int id)
+//	private void gd1(int id)
 //	{
-//		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
 //		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
 //		{
 //			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
 //				mayorPuntuacion.clonar(actual);
-//			
 //			return;
 //		}
 //		
-//		// caso base 2 : si hay conflicto entre la persona a agregar y las que ya están en actual
 //		if (hayConflicto(id, actual.getPersonas()))
-//		{
-//			System.out.println("Conflicto detectado");
 //			return;
-//		}
-//			
+//		
 //		actual.agregar(personas.get(id));
-//		generarDesde(id+1);
-//			
+//		gd1(id+1);
+//		
 //		actual.quitar(personas.get(id));
-//		generarDesde(id+1);
+//		gd1(id+1);
 //	}
+	
+	private void generarDesde(int id)
+	{
+		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
+		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
+		{
+			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
+				mayorPuntuacion.clonar(actual);
+			
+			return;
+		}
+		
+		// caso base 2 : si hay conflicto entre la persona a agregar y las que ya están en actual
+		if (hayConflicto(id, actual.getPersonas()))
+			return;
+			
+		actual.agregar(personas.get(id));
+		generarDesde(id+1);
+			
+		actual.quitar(personas.get(id));
+		generarDesde(id+1);
+	}
 	
 	private boolean cumpleTodosRequisitos()
 	{
