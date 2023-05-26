@@ -16,6 +16,12 @@ public class Requerimiento
 		setCantTesters(cantTesters);
 		setTamano(cantLiderProyecto+cantArquitectos+cantDevelopers+cantTesters);
 	}
+	
+	@Override
+	public String toString() {
+		return "Requerimiento [cantLiderProyecto=" + cantLiderProyecto + ", cantArquitectos=" + cantArquitectos
+				+ ", cantDevelopers=" + cantDevelopers + ", cantTesters=" + cantTesters + ", tamano=" + tamano + "]";
+	}
 
 	public int getCantLiderProyecto()
 	{

@@ -41,7 +41,7 @@ public class Solver implements Runnable
 	{
 		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
 		{
-			if (actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
+			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
 				mayorPuntuacion.clonar(actual);
 			return;
 		}
@@ -92,12 +92,9 @@ public class Solver implements Runnable
 	private boolean hayConflicto(int id, Set<Persona> personas)
 	{
 		for (Persona persona : personas)
-		{
 			if (incompatibles.get(id).contains(persona.getId()))
-			{
 				return true;
-			}
-		}
+			
 		return false;
 	}
 

@@ -45,12 +45,16 @@ public class Grupo {
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
 			cantLiderProyecto--;
+			break;
 		case ARQUITECTO:
 			cantArquitectos--;
+			break;
 		case PROGRAMADOR:
 			cantDevelopers--;
+			break;
 		case TESTER:
 			cantTesters--;
+			break;
 		}
 	}
 	
@@ -73,7 +77,11 @@ public class Grupo {
 	@Override
 	public String toString()
 	{
-		return "Grupo [tamano=" + tamano + ", puntuacion=" + puntuacion + ",\n personas=" + personas + "]\n";
+		return "Grupo [tamano=" + tamano + ", puntuacion=" + puntuacion + ",\n personas=" + personas + "]\n"
+				+ " Lider de Proyecto: " + cantLiderProyecto + "\n"
+				+ " Arquitectos: " + cantArquitectos + "\n"
+				+ " Programadores: " + cantDevelopers + "\n"
+				+ " Testers: " + cantTesters + "\n";
 	}
 
 	public int getCantLiderProyecto() {

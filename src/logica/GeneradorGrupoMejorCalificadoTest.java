@@ -31,6 +31,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarPersona(4, "Eusebio Zamora", Rol.TESTER);
 		generador.agregarIncompatibilidad(0, 1);
 		assertTrue(generador.getIncompatibilidadesById(0).contains(1));
+		assertTrue(generador.getIncompatibilidadesById(1).contains(0));
 	}
 	
 	@Test
