@@ -6,7 +6,7 @@ import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
 
-public class Solver implements Runnable
+public class Solver extends Thread
 {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
@@ -23,6 +23,7 @@ public class Solver implements Runnable
 		setRequeridos(requeridos);
 	}
 	
+	@Override
 	public void run()
 	{
 		generarMejorEquipo();
