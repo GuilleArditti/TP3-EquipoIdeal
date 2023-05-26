@@ -12,17 +12,19 @@ public class Solver extends Thread
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
 	private Grupo actual;
-	private Grupo mayorPuntuacion;
+	private Grupo grupoMayorPuntuacion;
 	
 	public Solver(	List<Persona> personas,
 					List<List<Integer>> incompatibles,
-					Requerimiento requeridos)
+					Requerimiento requeridos,
+					Grupo grupoMayorPuntuacion)
 	{
 		setPersonas(personas);
 		setIncompatibles(incompatibles);
 		setRequeridos(requeridos);
+		setGrupoMayorPuntuacion(grupoMayorPuntuacion);
 	}
-	
+
 	@Override
 	public void run()
 	{
@@ -32,7 +34,6 @@ public class Solver extends Thread
 	public void generarMejorEquipo()
 	{
 		actual = new Grupo();
-		mayorPuntuacion = new Grupo();
 		
 		generarDesde(0);
 	}
@@ -42,8 +43,8 @@ public class Solver extends Thread
 		// caso base 1 : llegamos a una hoja o el grupo actual tiene el tamanio requerido
 		if (id == personas.size() || actual.getTamano() == requeridos.getTamano())
 		{
-			if (cumpleTodosRequisitos() && actual.getPuntuacion() > mayorPuntuacion.getPuntuacion())
-				mayorPuntuacion.clonar(actual);
+			if (cumpleTodosRequisitos() && actual.getPuntuacion() > grupoMayorPuntuacion.getPuntuacion())
+				grupoMayorPuntuacion.clonar(actual);
 			
 			return;
 		}
@@ -91,8 +92,13 @@ public class Solver extends Thread
 		this.requeridos = requeridos;
 	}
 
-	public Grupo getMayorPuntuacion()
+	public Grupo getGrupoMayorPuntuacion()
 	{
-		return mayorPuntuacion;
+		return grupoMayorPuntuacion;
+	}
+	
+	private void setGrupoMayorPuntuacion(Grupo grupoMayorPuntuacion) {
+		this.grupoMayorPuntuacion = grupoMayorPuntuacion;
+		
 	}
 }

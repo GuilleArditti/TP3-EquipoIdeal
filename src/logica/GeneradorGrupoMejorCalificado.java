@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import grupoMejorCalificado.Solver;
 import java.util.ArrayList;
+
+import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
@@ -13,11 +15,13 @@ public class GeneradorGrupoMejorCalificado
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
+	private Grupo grupoMayorPuntuacion;
 	
 	public GeneradorGrupoMejorCalificado()
 	{
 		personas = new ArrayList<>();
 		incompatibles = new ArrayList<>();
+		grupoMayorPuntuacion = new Grupo();
 	}
 	
 	public void agregarPersona(int rendimiento, String nombre, Rol rol)
@@ -46,9 +50,14 @@ public class GeneradorGrupoMejorCalificado
 	
 	public Set<Persona> generarMejorEquipo()
 	{
-		Solver solver = new Solver(personas, incompatibles, requeridos);
-		solver.run();
-		return solver.getMayorPuntuacion().getPersonas();
+		Solver solver = new Solver(personas, incompatibles, requeridos, grupoMayorPuntuacion);
+		solver.start();
+		try {
+			solver.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return grupoMayorPuntuacion.getPersonas();
 	}
 	
 	public List<Persona> getListaPersonas()
