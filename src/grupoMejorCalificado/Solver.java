@@ -16,13 +16,11 @@ public class Solver extends Thread
 	
 	public Solver(	List<Persona> personas,
 					List<List<Integer>> incompatibles,
-					Requerimiento requeridos,
-					Grupo grupoMayorPuntuacion)
+					Requerimiento requeridos)
 	{
 		setPersonas(personas);
 		setIncompatibles(incompatibles);
 		setRequeridos(requeridos);
-		setGrupoMayorPuntuacion(grupoMayorPuntuacion);
 	}
 
 	@Override
@@ -34,7 +32,7 @@ public class Solver extends Thread
 	public void generarMejorEquipo()
 	{
 		actual = new Grupo();
-		
+		grupoMayorPuntuacion = new Grupo();
 		generarDesde(0);
 	}
 	
@@ -94,10 +92,5 @@ public class Solver extends Thread
 	public Grupo getGrupoMayorPuntuacion()
 	{
 		return grupoMayorPuntuacion;
-	}
-	
-	private void setGrupoMayorPuntuacion(Grupo grupoMayorPuntuacion) {
-		this.grupoMayorPuntuacion = grupoMayorPuntuacion;
-		
 	}
 }
