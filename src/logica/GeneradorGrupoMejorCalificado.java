@@ -52,11 +52,11 @@ public class GeneradorGrupoMejorCalificado
 	{
 		Solver solver = new Solver(personas, incompatibles, requeridos, grupoMayorPuntuacion);
 		solver.start();
-		try {
-			solver.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+			try {
+				solver.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		return grupoMayorPuntuacion.getPersonas();
 	}
 	

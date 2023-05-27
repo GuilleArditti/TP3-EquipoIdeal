@@ -45,7 +45,6 @@ public class Solver extends Thread
 		{
 			if (cumpleTodosRequisitos() && actual.getPuntuacion() > grupoMayorPuntuacion.getPuntuacion())
 				grupoMayorPuntuacion.clonar(actual);
-			
 			return;
 		}
 		

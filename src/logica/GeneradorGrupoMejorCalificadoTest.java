@@ -36,6 +36,24 @@ public class GeneradorGrupoMejorCalificadoTest {
 	
 	@Test
 	public void generarMejorEquipoTest() {
+		armarGrupo();
+		int rendimientoEsperado=32;
+		int rendimientoObtenido=resultadoMejorEquipo();
+		assertEquals(rendimientoEsperado,rendimientoObtenido);
+	}
+
+	private int resultadoMejorEquipo() {
+		Set<Persona> resultado = generador.generarMejorEquipo();
+		
+		int rendimientoGlobal = 0;
+		
+		for (Persona persona : resultado)
+			rendimientoGlobal += persona.getRendimiento();
+		
+		return rendimientoGlobal;
+	}
+
+	private void armarGrupo() {
 		generador.agregarPersona(4, "Juan Perez", Rol.LIDER_DE_PROYECTO);
 		generador.agregarPersona(5, "Roberto Gomez", Rol.LIDER_DE_PROYECTO);
 		
@@ -54,13 +72,5 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarIncompatibilidad(8, 9);
 		
 		generador.setRequerimientos(1, 2, 2, 2);
-		Set<Persona> resultado = generador.generarMejorEquipo();
-		
-		int rendimientoGlobal = 0;
-		
-		for (Persona persona : resultado)
-			rendimientoGlobal += persona.getRendimiento();
-		
-		assertEquals(32, rendimientoGlobal);
 	}
 }
