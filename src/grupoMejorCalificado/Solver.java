@@ -13,6 +13,7 @@ public class Solver extends Thread
 	private Requerimiento requeridos;
 	private Grupo actual;
 	private Grupo grupoMayorPuntuacion;
+
 	
 	public Solver(	List<Persona> personas,
 					List<List<Integer>> incompatibles,
@@ -73,6 +74,8 @@ public class Solver extends Thread
 			
 		return false;
 	}
+	
+
 
 	public void setPersonas(List<Persona> personas)
 	{
@@ -83,6 +86,7 @@ public class Solver extends Thread
 	{
 		this.incompatibles = incompatibles;
 	}
+	
 
 	public void setRequeridos(Requerimiento requeridos)
 	{

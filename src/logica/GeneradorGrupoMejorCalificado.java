@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import grupoMejorCalificado.Solver;
 import java.util.ArrayList;
+
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
@@ -16,9 +17,11 @@ public class GeneradorGrupoMejorCalificado
 	
 	public GeneradorGrupoMejorCalificado()
 	{
+
 		personas = new ArrayList<>();
 		incompatibles = new ArrayList<>();
 	}
+	
 	
 	public void agregarPersona(int rendimiento, String nombre, Rol rol)
 	{

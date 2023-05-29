@@ -19,8 +19,9 @@ public class Persona
 	@Override
 	public String toString()
 	{
-		return "Persona [id=" + id + ", rendimiento=" + rendimiento
-				+ ", nombre=" + nombre + ", rol=" + rol + "]";
+		return nombre + " , " + rol;
+//		return "Persona [id=" + id + ", rendimiento=" + rendimiento
+//				+ ", nombre=" + nombre + ", rol=" + rol + "]";
 	}
 	
 	@Override
