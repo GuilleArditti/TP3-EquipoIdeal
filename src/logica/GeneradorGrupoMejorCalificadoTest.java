@@ -37,8 +37,8 @@ public class GeneradorGrupoMejorCalificadoTest {
 	@Test
 	public void generarMejorEquipoTest() {
 		armarGrupo();
-		int rendimientoEsperado=32;
-		int rendimientoObtenido=resultadoMejorEquipo();
+		int rendimientoEsperado = 32;
+		int rendimientoObtenido = resultadoMejorEquipo();
 		assertEquals(rendimientoEsperado,rendimientoObtenido);
 	}
 

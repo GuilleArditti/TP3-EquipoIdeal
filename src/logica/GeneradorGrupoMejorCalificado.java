@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import grupoMejorCalificado.Solver;
 import java.util.ArrayList;
-
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;

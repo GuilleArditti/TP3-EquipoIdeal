@@ -20,7 +20,7 @@ public class Grupo {
 		personas.add(persona);
 		tamano++;
 		setPuntuacion(getPuntuacion() + persona.getRendimiento());
-		
+
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
 			cantLiderProyecto++;
@@ -36,12 +36,12 @@ public class Grupo {
 			break;
 		}
 	}
-	
+
 	public void quitar(Persona persona) {
 		personas.remove(persona);
 		tamano--;
 		setPuntuacion(getPuntuacion() - persona.getRendimiento());
-		
+
 		switch (persona.getRol()) {
 		case LIDER_DE_PROYECTO:
 			cantLiderProyecto--;
@@ -57,9 +57,8 @@ public class Grupo {
 			break;
 		}
 	}
-	
-	public void clonar(Grupo otro)
-	{
+
+	public void clonar(Grupo otro) {
 		setCantLiderProyecto(0);
 		setCantArquitectos(0);
 		setCantDevelopers(0);
@@ -67,21 +66,17 @@ public class Grupo {
 		setTamano(0);
 		setPuntuacion(0);
 		setPersonas(new HashSet<>());
-		
-		for (Persona persona : otro.personas)
-		{
+
+		for (Persona persona : otro.personas) {
 			this.agregar(persona);
 		}
 	}
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Grupo [tamano=" + tamano + ", puntuacion=" + puntuacion + ",\n personas=" + personas + "]\n"
-				+ " Lider de Proyecto: " + cantLiderProyecto + "\n"
-				+ " Arquitectos: " + cantArquitectos + "\n"
-				+ " Programadores: " + cantDevelopers + "\n"
-				+ " Testers: " + cantTesters + "\n";
+				+ " Lider de Proyecto: " + cantLiderProyecto + "\n" + " Arquitectos: " + cantArquitectos + "\n"
+				+ " Programadores: " + cantDevelopers + "\n" + " Testers: " + cantTesters + "\n";
 	}
 
 	public int getCantLiderProyecto() {
