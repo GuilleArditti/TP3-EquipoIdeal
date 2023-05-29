@@ -9,11 +9,13 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -21,6 +23,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 import logica.GeneradorGrupoMejorCalificado;
 import objetos.Persona;
@@ -30,12 +33,12 @@ import objetos.Rol;
 public class EquipoIdeal implements ActionListener{
 
 	private JFrame frame;
-	private JList<Persona> listaDeEmpleados;
+	private JList<String> listaDeEmpleados;
 	private JPanel panelDeDetalles;
 	private JButton botonAgregar;
+	private JButton botonAgregarIncompatibilidad;
 	private JButton botonGenerarGrupo;
 	private JButton botonListo;
-	private JButton botonQuitar;
 	private JButton botonLimpiar;
 	private JProgressBar barraDeProgreso;
 	private JPanel panelDeRequerimientos;
@@ -45,6 +48,7 @@ public class EquipoIdeal implements ActionListener{
 	private JSpinner spinnerProgramador;
 	private JSpinner spinnerTester;
 	private GeneradorGrupoMejorCalificado grupo;
+	
 	
 
 	/**
@@ -159,6 +163,8 @@ public class EquipoIdeal implements ActionListener{
 		etiquetaRequerimientos.setFont(new Font("Calibri", Font.BOLD, 18));
 		
 		
+		
+		
 	}
 
 	private void generarBotones() {
@@ -169,10 +175,10 @@ public class EquipoIdeal implements ActionListener{
 		botonGenerarGrupo.addActionListener(this);
 		frame.getContentPane().add(botonGenerarGrupo);
 		
-		botonAgregar = new JButton("Agregar");
+		botonAgregar = new JButton("Agregar empleado");
 		botonAgregar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		botonAgregar.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonAgregar.setBounds(10, 519, 89, 23);
+		botonAgregar.setBounds(10, 519, 208, 23);
 		botonAgregar.addActionListener(this);
 		frame.getContentPane().add(botonAgregar);
 		
@@ -190,12 +196,12 @@ public class EquipoIdeal implements ActionListener{
 		botonLimpiar.addActionListener(this);
 		frame.getContentPane().add(botonLimpiar);
 		
-		botonQuitar = new JButton("Quitar");
-		botonQuitar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonQuitar.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonQuitar.setBounds(192, 519, 89, 23);
-		botonQuitar.addActionListener(this);
-		frame.getContentPane().add(botonQuitar);
+		botonAgregarIncompatibilidad = new JButton("Agregar Incompatibilidad");
+		botonAgregarIncompatibilidad.addActionListener(this);
+		botonAgregarIncompatibilidad.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		botonAgregarIncompatibilidad.setFont(new Font("Calibri", Font.BOLD, 15));
+		botonAgregarIncompatibilidad.setBounds(10, 553, 208, 23);
+		frame.getContentPane().add(botonAgregarIncompatibilidad);
 	}
 
 	private void generarPanelDeDetalles() {
@@ -211,32 +217,23 @@ public class EquipoIdeal implements ActionListener{
 		frame.getContentPane().add(etiqueta);
 	}
 
-	private void generarListaDeEmpleados() {
-		listaDeEmpleados = new JList<Persona>();
-		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		listaDeEmpleados.setBounds(10, 235, 271, 273);
-		frame.getContentPane().add(listaDeEmpleados);
-		
-		JLabel etiqueta = new JLabel("Lista de empleados:");
-		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
-		etiqueta.setBounds(10, 198, 208, 23);
-		frame.getContentPane().add(etiqueta);
-	}
+
 	
 	private void cargarEmpleado() {
 		String nombre=JOptionPane.showInputDialog(null,"Ingrese el nombre del empleado/a: ","Nombre del empleado", JOptionPane.DEFAULT_OPTION);
 		int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.DEFAULT_OPTION));
 		Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione un rol para "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
 		grupo.agregarPersona(rendimiento, nombre, rol);
-		agregarIncompatibilidad(nombre);
-	}
-	
-	private void agregarIncompatibilidad(String nombre) {
-			Persona persona=(Persona) JOptionPane.showInputDialog(null, nombre + " es incompatible con...", "Incompatibilidad",JOptionPane.PLAIN_MESSAGE,null,grupo.getListaPersonas().toArray(),null);		
-			grupo.agregarIncompatibilidad(getIdByNombre(nombre),persona.getId());
-			//System.out.println(grupo.getIncompatibilidades().toString());
+		mostrarEmpleadoEnLista(nombre, rol, getIdByNombre(nombre));
 		
 	}
+	
+//	private void agregarIncompatibilidad(String nombre) {
+//		Persona persona = (Persona) JOptionPane.showInputDialog(null, nombre + " es incompatible con...",
+//				"Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, grupo.getListaPersonas().toArray(), null);
+//		grupo.agregarIncompatibilidad(getIdByNombre(nombre), persona.getId());
+//		System.out.println(grupo.getIncompatibilidades().toString());
+//	}
 	
 	private int getIdByNombre(String nombre) {
 		for(Persona persona: grupo.getListaPersonas()) {
@@ -247,12 +244,32 @@ public class EquipoIdeal implements ActionListener{
 		return -1;
 	}
 	
-	private void mostrarEmpleadoEnLista() {
-		for(Persona persona: grupo.getListaPersonas()) {
-			}
-		}
 	
+	private void generarListaDeEmpleados() {
+		listaDeEmpleados = new JList<String>();
+		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		listaDeEmpleados.setBounds(10, 235, 271, 273);
+		frame.getContentPane().add(listaDeEmpleados);
+		
+		JLabel etiqueta = new JLabel("Lista de empleados:");
+		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
+		etiqueta.setBounds(10, 198, 208, 23);
+		frame.getContentPane().add(etiqueta);
+		modelarListaEmpleados();
+	}
 
+	private DefaultListModel<String> modelarListaEmpleados() {
+		DefaultListModel<String> modelo = new DefaultListModel<>();
+		listaDeEmpleados.setModel(modelo);
+		return modelo;
+	}
+
+	private DefaultListModel<String> mostrarEmpleadoEnLista(String nombre, Rol rol, int id ) {
+		DefaultListModel<String> modelo = (DefaultListModel<String>) listaDeEmpleados.getModel();
+		modelo.addElement(nombre + " - " + rol + " - ID: "+ id);
+		return modelo;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -285,11 +302,14 @@ public class EquipoIdeal implements ActionListener{
 		if(e.getSource()==botonAgregar) {
 			if(grupo!=null) {
 				cargarEmpleado();
-
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!", "Advertencia",0);
 			}
+		}
+		
+		if(e.getSource()==botonAgregarIncompatibilidad) {
+//			agregarIncompatibilidad();
 		}
 	}
 }
