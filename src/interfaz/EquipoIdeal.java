@@ -221,11 +221,17 @@ public class EquipoIdeal implements ActionListener{
 	
 	private void cargarEmpleado() {
 		String nombre=JOptionPane.showInputDialog(null,"Ingrese el nombre del empleado/a: ","Nombre del empleado", JOptionPane.DEFAULT_OPTION);
-		int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.DEFAULT_OPTION));
-		Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione un rol para "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
-		grupo.agregarPersona(rendimiento, nombre, rol);
-		mostrarEmpleadoEnLista(nombre, rol, getIdByNombre(nombre));
-		
+		if(!nombre.isEmpty()) {
+			//int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.DEFAULT_OPTION));
+			int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.PLAIN_MESSAGE,null,new Object []{1,2,3,4,5},null).toString());
+			System.out.println(rendimiento);
+			Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione un rol para "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
+			grupo.agregarPersona(rendimiento, nombre, rol);
+			mostrarEmpleadoEnLista(nombre, rol, getIdByNombre(nombre));
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio","Advertencia",JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 //	private void agregarIncompatibilidad(String nombre) {
