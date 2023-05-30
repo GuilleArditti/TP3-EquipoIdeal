@@ -220,27 +220,70 @@ public class EquipoIdeal implements ActionListener{
 
 	
 	private void cargarEmpleado() {
-		String nombre=JOptionPane.showInputDialog(null,"Ingrese el nombre del empleado/a: ","Nombre del empleado", JOptionPane.DEFAULT_OPTION);
-		if(!nombre.isEmpty()) {
-			//int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.DEFAULT_OPTION));
-			int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese el rendimiento de " + nombre,"Rendimiento", JOptionPane.PLAIN_MESSAGE,null,new Object []{1,2,3,4,5},null).toString());
-			System.out.println(rendimiento);
-			Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione un rol para "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
-			grupo.agregarPersona(rendimiento, nombre, rol);
-			mostrarEmpleadoEnLista(nombre, rol, getIdByNombre(nombre));
+		if(grupo!=null) {
+			String nombre=JOptionPane.showInputDialog(null,"Ingrese el nombre del empleado/a: ","Nombre del empleado", JOptionPane.DEFAULT_OPTION);
+			if(!nombre.isEmpty()) {
+				int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese la calificacion historica de " + nombre,"Rendimiento", JOptionPane.PLAIN_MESSAGE,null,new Object []{1,2,3,4,5},null).toString());
+				Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione el rol de "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
+				grupo.agregarPersona(rendimiento, nombre, rol);
+				mostrarEmpleadoEnLista(nombre, rol);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio","Advertencia",JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio","Advertencia",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!", "Advertencia",0);
 		}
 	}
 	
-//	private void agregarIncompatibilidad(String nombre) {
-//		Persona persona = (Persona) JOptionPane.showInputDialog(null, nombre + " es incompatible con...",
-//				"Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, grupo.getListaPersonas().toArray(), null);
-//		grupo.agregarIncompatibilidad(getIdByNombre(nombre), persona.getId());
-//		System.out.println(grupo.getIncompatibilidades().toString());
-//	}
+	private void agregarIncompatibilidad() {
+		if(grupo==null) {
+			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!", "Advertencia",0);
+		}
+		if(grupo.getListaPersonas().size()>=2) {
+			Persona p1=(Persona) JOptionPane.showInputDialog(null, "Seleccione un empleado:", "Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, grupo.getListaPersonas().toArray(), null);
+			Persona p2=(Persona) JOptionPane.showInputDialog(null, p1.getNombre() + " es incompatible con...", "Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, grupo.getListaPersonas().toArray(), null);
+			if(p1.getNombre().equals(p2.getNombre())) {
+				JOptionPane.showMessageDialog(null, "Un empleado no puede ser incompatible consigo mismo", "Error",0);
+			}
+			else {
+				grupo.agregarIncompatibilidad(getIdByNombre(p1.getNombre()), getIdByNombre(p2.getNombre()));
+				JOptionPane.showMessageDialog(null, "Se agrego la incompatibilidad " + p1.getNombre() + " - " + p2.getNombre(), "Exito",JOptionPane.INFORMATION_MESSAGE);
+				System.out.println(grupo.getIncompatibilidades().toString());
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Se debe tener al menos 2 empleados en el grupo para agregar una incompatibilidad", "Advertencia",0);
+		}
+	}
 	
+	private void limpiarSeleccion() {
+		int resultado=JOptionPane.showConfirmDialog(null, "Seguro que desea reiniciar su seleccion?", "Limpiar",0);
+		if(resultado==0) {
+			grupo=null;
+			panelDeRequerimientos.add(spinnerLider);
+			panelDeRequerimientos.add(spinnerArquitecto);
+			panelDeRequerimientos.add(spinnerProgramador);
+			panelDeRequerimientos.add(spinnerTester);
+			botonListo.setBackground(new Color(240, 240, 240));
+			botonListo.setEnabled(true);
+			etiquetaRequerimientos.setText("Seleccione los requerimientos para el equipo:");
+		}
+	}
+	
+	private void confirmarRequerimiento() {
+		panelDeRequerimientos.remove(spinnerLider);
+		panelDeRequerimientos.remove(spinnerArquitecto);
+		panelDeRequerimientos.remove(spinnerProgramador);
+		panelDeRequerimientos.remove(spinnerTester);
+		botonListo.setBackground(new Color(180,255,180));
+		botonListo.setEnabled(false);
+		etiquetaRequerimientos.setText("Requerimientos:");
+		grupo= new GeneradorGrupoMejorCalificado();
+		grupo.setRequerimientos((int)spinnerLider.getValue(), (int)spinnerArquitecto.getValue(), (int)spinnerProgramador.getValue(), (int)spinnerTester.getValue());
+	}
+		
 	private int getIdByNombre(String nombre) {
 		for(Persona persona: grupo.getListaPersonas()) {
 			if(persona.getNombre().equals(nombre)) {
@@ -270,9 +313,9 @@ public class EquipoIdeal implements ActionListener{
 		return modelo;
 	}
 
-	private DefaultListModel<String> mostrarEmpleadoEnLista(String nombre, Rol rol, int id ) {
+	private DefaultListModel<String> mostrarEmpleadoEnLista(String nombre, Rol rol) {
 		DefaultListModel<String> modelo = (DefaultListModel<String>) listaDeEmpleados.getModel();
-		modelo.addElement(nombre + " - " + rol + " - ID: "+ id);
+		modelo.addElement(nombre + " - " + rol);
 		return modelo;
 	}
 	
@@ -280,42 +323,19 @@ public class EquipoIdeal implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource()==botonListo) {
-			panelDeRequerimientos.remove(spinnerLider);
-			panelDeRequerimientos.remove(spinnerArquitecto);
-			panelDeRequerimientos.remove(spinnerProgramador);
-			panelDeRequerimientos.remove(spinnerTester);
-			botonListo.setBackground(new Color(180,255,180));
-			botonListo.setEnabled(false);
-			etiquetaRequerimientos.setText("Requerimientos:");
-			grupo= new GeneradorGrupoMejorCalificado();
-			grupo.setRequerimientos((int)spinnerLider.getValue(), (int)spinnerArquitecto.getValue(), (int)spinnerProgramador.getValue(), (int)spinnerTester.getValue());	
+			confirmarRequerimiento();
 		}
 		
 		if(e.getSource()==botonLimpiar) {
-			int resultado=JOptionPane.showConfirmDialog(null, "Seguro que desea reiniciar su seleccion?", "Limpiar",0);
-			if(resultado==0) {
-				grupo=null;
-				panelDeRequerimientos.add(spinnerLider);
-				panelDeRequerimientos.add(spinnerArquitecto);
-				panelDeRequerimientos.add(spinnerProgramador);
-				panelDeRequerimientos.add(spinnerTester);
-				botonListo.setBackground(new Color(240, 240, 240));
-				botonListo.setEnabled(true);
-				etiquetaRequerimientos.setText("Seleccione los requerimientos para el equipo:");
-			}			
+			limpiarSeleccion();
 		}
 		
 		if(e.getSource()==botonAgregar) {
-			if(grupo!=null) {
-				cargarEmpleado();
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!", "Advertencia",0);
-			}
+			cargarEmpleado();
 		}
 		
 		if(e.getSource()==botonAgregarIncompatibilidad) {
-//			agregarIncompatibilidad();
+			agregarIncompatibilidad();
 		}
 	}
 }
