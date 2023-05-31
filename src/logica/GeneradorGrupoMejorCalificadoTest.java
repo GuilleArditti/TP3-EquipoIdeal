@@ -32,6 +32,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarIncompatibilidad(0, 1);
 		assertTrue(generador.getIncompatibilidadesById(0).contains(1));
 		assertTrue(generador.getIncompatibilidadesById(1).contains(0));
+		assertTrue(generador.getIncompatibilidades().size()==2);
 	}
 	
 	@Test

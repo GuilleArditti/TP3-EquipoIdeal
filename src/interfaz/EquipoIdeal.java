@@ -7,34 +7,40 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.JFileChooser;
+
 
 import logica.GeneradorGrupoMejorCalificado;
 import objetos.Persona;
-import objetos.Requerimiento;
 import objetos.Rol;
 
-public class EquipoIdeal implements ActionListener{
+public class EquipoIdeal implements ActionListener, ListSelectionListener{
 
 	private JFrame frame;
-	private JList<String> listaDeEmpleados;
+	private JList<Persona> listaDeEmpleados;
 	private JPanel panelDeDetalles;
+	private JLabel labelFoto;
+	private JLabel etiquetaRendimiento;
+	private JLabel etiquetaNombre;
+	private JLabel etiquetaRol;
+	private JButton botonVerIncompatibilidad;
 	private JButton botonAgregar;
 	private JButton botonAgregarIncompatibilidad;
 	private JButton botonGenerarGrupo;
@@ -49,8 +55,6 @@ public class EquipoIdeal implements ActionListener{
 	private JSpinner spinnerTester;
 	private GeneradorGrupoMejorCalificado grupo;
 	
-	
-
 	/**
 	 * Launch the application.
 	 */
@@ -161,10 +165,7 @@ public class EquipoIdeal implements ActionListener{
 		panelDeRequerimientos.add(etiquetaRequerimientos);
 		etiquetaRequerimientos.setBackground(new Color(255, 255, 255));
 		etiquetaRequerimientos.setFont(new Font("Calibri", Font.BOLD, 18));
-		
-		
-		
-		
+			
 	}
 
 	private void generarBotones() {
@@ -211,6 +212,29 @@ public class EquipoIdeal implements ActionListener{
 		frame.getContentPane().add(panelDeDetalles);
 		panelDeDetalles.setLayout(null);
 		
+		labelFoto= new JLabel();
+		labelFoto.setBounds(10, 11, 100, 100);
+		panelDeDetalles.add(labelFoto);		
+		
+		etiquetaRendimiento= new JLabel("");
+		etiquetaRendimiento.setBounds(10, 166, 198, 25);
+		panelDeDetalles.add(etiquetaRendimiento);
+		
+		etiquetaNombre = new JLabel("");
+		etiquetaNombre.setBounds(120, 11, 141, 25);
+		panelDeDetalles.add(etiquetaNombre);
+		
+		etiquetaRol = new JLabel("");
+		etiquetaRol.setBounds(10, 130, 198, 25);
+		panelDeDetalles.add(etiquetaRol);
+		
+		botonVerIncompatibilidad = new JButton("Ver incompatibilidad");
+		botonVerIncompatibilidad.setFont(new Font("Calibri", Font.BOLD, 15));
+		botonVerIncompatibilidad.setBounds(10, 239, 185, 23);
+		botonVerIncompatibilidad.setEnabled(false);
+		botonVerIncompatibilidad.addActionListener(this);
+		panelDeDetalles.add(botonVerIncompatibilidad);
+		
 		JLabel etiqueta = new JLabel("Detalle:");
 		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
 		etiqueta.setBounds(403, 201, 89, 17);
@@ -222,11 +246,13 @@ public class EquipoIdeal implements ActionListener{
 	private void cargarEmpleado() {
 		if(grupo!=null) {
 			String nombre=JOptionPane.showInputDialog(null,"Ingrese el nombre del empleado/a: ","Nombre del empleado", JOptionPane.DEFAULT_OPTION);
-			if(!nombre.isEmpty()) {
+			if(!nombre.isEmpty()) {	
 				int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese la calificacion historica de " + nombre,"Rendimiento", JOptionPane.PLAIN_MESSAGE,null,new Object []{1,2,3,4,5},null).toString());
 				Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione el rol de "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
 				grupo.agregarPersona(rendimiento, nombre, rol);
-				mostrarEmpleadoEnLista(nombre, rol);
+				Persona p= new Persona(rendimiento, nombre, rol);
+				elegirFoto(p);
+				mostrarEmpleadoEnLista(p);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio","Advertencia",JOptionPane.WARNING_MESSAGE);
@@ -293,11 +319,21 @@ public class EquipoIdeal implements ActionListener{
 		return -1;
 	}
 	
+	private Persona getpersonaById(int id) {
+		for(Persona persona: grupo.getListaPersonas()) {
+			if(persona.getId()==id) {
+				return persona;
+			}
+		}
+		return null;
+	}
+	
 	
 	private void generarListaDeEmpleados() {
-		listaDeEmpleados = new JList<String>();
+		listaDeEmpleados = new JList<Persona>();
 		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		listaDeEmpleados.setBounds(10, 235, 271, 273);
+		listaDeEmpleados.addListSelectionListener(this);
 		frame.getContentPane().add(listaDeEmpleados);
 		
 		JLabel etiqueta = new JLabel("Lista de empleados:");
@@ -307,16 +343,50 @@ public class EquipoIdeal implements ActionListener{
 		modelarListaEmpleados();
 	}
 
-	private DefaultListModel<String> modelarListaEmpleados() {
-		DefaultListModel<String> modelo = new DefaultListModel<>();
+	private DefaultListModel<Persona> modelarListaEmpleados() {
+		DefaultListModel<Persona> modelo = new DefaultListModel<>();
 		listaDeEmpleados.setModel(modelo);
 		return modelo;
 	}
 
-	private DefaultListModel<String> mostrarEmpleadoEnLista(String nombre, Rol rol) {
-		DefaultListModel<String> modelo = (DefaultListModel<String>) listaDeEmpleados.getModel();
-		modelo.addElement(nombre + " - " + rol);
+	private DefaultListModel<Persona> mostrarEmpleadoEnLista(Persona persona) {
+		DefaultListModel<Persona> modelo = (DefaultListModel<Persona>) listaDeEmpleados.getModel();
+		modelo.addElement(persona);
 		return modelo;
+	}
+	
+	private void elegirFoto(Persona p) {
+		int entrada=JOptionPane.showConfirmDialog(null, "Desea agregar una foto para " + p.getNombre() + "?", "Subir foto",0);
+		if(entrada==0) {
+			JFileChooser fileChooser = new JFileChooser();
+	        ImageIcon iconRedimensionado=null;
+	        int resultado = fileChooser.showOpenDialog(null);
+	        if(resultado==JFileChooser.APPROVE_OPTION) {
+	        	File selectedFile= fileChooser.getSelectedFile();
+	        	ImageIcon imageIcon= new ImageIcon(selectedFile.getAbsolutePath());
+	        	Image image= imageIcon.getImage();
+	        	Image imagenRedimensionada= image.getScaledInstance(labelFoto.getWidth(),labelFoto.getHeight(),Image.SCALE_DEFAULT);
+	        	iconRedimensionado= new ImageIcon(imagenRedimensionada); 
+	        	p.setFotoDePerfil(iconRedimensionado);
+	        	JOptionPane.showMessageDialog(null, iconRedimensionado, "Imagen seleccionada:",
+	                     JOptionPane.PLAIN_MESSAGE);
+	        }
+		}
+		else {
+			ImageIcon imageIcon= new ImageIcon("FotosEmpleados/fotoPorDefault.png");
+        	Image image= imageIcon.getImage();
+        	Image imagenRedimensionada= image.getScaledInstance(labelFoto.getWidth(),labelFoto.getHeight(),Image.SCALE_DEFAULT);
+        	ImageIcon iconredimensionado= new ImageIcon(imagenRedimensionada); 
+			p.setFotoDePerfil(iconredimensionado);
+		}
+	}
+	
+	private void mostrarSeleccion() {
+		etiquetaRendimiento.setText("Calif.Histórica: "+ String.valueOf(listaDeEmpleados.getSelectedValue().getRendimiento()));
+		etiquetaNombre.setText(listaDeEmpleados.getSelectedValue().getNombre());
+		etiquetaRol.setText("Rol actual: " + listaDeEmpleados.getSelectedValue().getRol().toString());
+		botonVerIncompatibilidad.setEnabled(true);
+		labelFoto.setIcon(listaDeEmpleados.getSelectedValue().getFotoDePerfil());	
 	}
 	
 	@Override
@@ -337,5 +407,34 @@ public class EquipoIdeal implements ActionListener{
 		if(e.getSource()==botonAgregarIncompatibilidad) {
 			agregarIncompatibilidad();
 		}
+		
+		if(e.getSource()==botonVerIncompatibilidad) {
+//			JOptionPane.showMessageDialog(null, personasIncompatiblesDeUnId(listaDeEmpleados.getSelectedValue().getId()), listaDeEmpleados.getSelectedValue().getNombre() + " es incompatible con: ", JOptionPane.PLAIN_MESSAGE);
+//			System.out.println(listaDeEmpleados.getSelectedValue().getNombre());
+			mostrarIncompatibilidades();
+		}
 	}
+	
+	private void mostrarIncompatibilidades() {
+		System.out.print(listaDeEmpleados.getSelectedValue().getNombre()+ " es incompatible con: ");
+		System.out.println(personasIncompatiblesDeUnId(listaDeEmpleados.getSelectedValue().getId()));
+	}
+	
+	private String personasIncompatiblesDeUnId(int id) {
+		String incompatibles="";
+		List<Integer> IDs= grupo.getIncompatibilidadesById(id);
+		System.out.println(getpersonaById(id));
+		for(int identificacion: IDs) {
+			incompatibles= incompatibles + getpersonaById(identificacion).toString() + "\n";
+		}
+		
+		return incompatibles;
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		mostrarSeleccion();
+	}
+
+	
 }

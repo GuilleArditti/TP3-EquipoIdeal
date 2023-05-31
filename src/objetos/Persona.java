@@ -1,11 +1,14 @@
 package objetos;
 
+import javax.swing.ImageIcon;
+
 public class Persona
 {
 	private int id;
 	private int rendimiento;
 	private String nombre;
 	private Rol rol;
+	private ImageIcon fotoDePerfil=new ImageIcon("/FotosEmpleados/3135715.png");
 	
 	public Persona(int id, int rendimiento, String nombre, Rol rol)
 	{
@@ -13,6 +16,12 @@ public class Persona
 		setRendimiento(rendimiento);
 		setNombre(nombre);
 		setRol(rol);
+	}
+	
+	public Persona(int rendimiento,String nombre,Rol rol) {
+		this.rendimiento=rendimiento;
+		this.nombre=nombre;
+		this.rol=rol;
 	}
 	
 
@@ -75,4 +84,14 @@ public class Persona
 	{
 		this.rol = rol;
 	}
+
+	public ImageIcon getFotoDePerfil() {
+		return fotoDePerfil;
+	}
+
+	public void setFotoDePerfil(ImageIcon fotoDePerfil) {
+		this.fotoDePerfil = fotoDePerfil;
+	}
+	
+	
 }
