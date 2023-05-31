@@ -8,7 +8,7 @@ public class Persona
 	private int rendimiento;
 	private String nombre;
 	private Rol rol;
-	private ImageIcon fotoDePerfil=new ImageIcon("/FotosEmpleados/3135715.png");
+	private ImageIcon fotoDePerfil;
 	
 	public Persona(int id, int rendimiento, String nombre, Rol rol)
 	{
