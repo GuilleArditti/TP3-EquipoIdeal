@@ -26,11 +26,11 @@ public class SolverHeuristico extends Thread {
 	}
 	
 	/**
-		 * crear una lista para cada Rol
-		 * ordenarlas por puntuacion
-		 * seleccionar las mejores puntuaciones sin pasarme de los requisitos y sin agregar incompatibles
-		 * agregar los seleccionados a un grupo solucion
-		 */
+	 * Este metodo
+	 * crea una lista para cada Rol
+	 * las ordena por rendimiento
+	 * selecciona la cantidad indicada para cada Rol, sin agregar incompatibles
+	 */
 	@Override
 	public void run() {
 		grupoSolucion = new Grupo();
@@ -136,13 +136,7 @@ public class SolverHeuristico extends Thread {
 		this.actual = actual;
 	}
 
-	public Grupo getGrupoMayorPuntuacion() {
+	public Grupo getGrupoSolucion() {
 		return grupoSolucion;
 	}
-
-	public void setGrupoMayorPuntuacion(Grupo grupoMayorPuntuacion) {
-		this.grupoSolucion = grupoMayorPuntuacion;
-	}
-	
-	
 }
