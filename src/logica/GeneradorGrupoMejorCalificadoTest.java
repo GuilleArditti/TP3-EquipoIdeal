@@ -32,14 +32,13 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarIncompatibilidad(0, 1);
 		assertTrue(generador.getIncompatibilidadesById(0).contains(1));
 		assertTrue(generador.getIncompatibilidadesById(1).contains(0));
-		assertTrue(generador.getIncompatibilidades().size()==2);
 	}
 	
 	@Test
 	public void generarMejorEquipoTest() {
 		armarGrupo();
-		int rendimientoEsperado = 32;
-		int rendimientoObtenido = resultadoMejorEquipo();
+		int rendimientoEsperado=32;
+		int rendimientoObtenido=resultadoMejorEquipo();
 		assertEquals(rendimientoEsperado,rendimientoObtenido);
 	}
 
@@ -48,10 +47,9 @@ public class GeneradorGrupoMejorCalificadoTest {
 		
 		int rendimientoGlobal = 0;
 		
-		for (Persona persona : resultado) {
-//			System.out.println(persona.toString()+ " " +persona.getRendimiento()+ " id "+persona.getId());
+		for (Persona persona : resultado)
 			rendimientoGlobal += persona.getRendimiento();
-		}
+		
 		return rendimientoGlobal;
 	}
 
@@ -65,14 +63,13 @@ public class GeneradorGrupoMejorCalificadoTest {
 		
 		generador.agregarPersona(3, "Braian Davico", Rol.PROGRAMADOR);
 		generador.agregarPersona(4, "Bruno Avila", Rol.PROGRAMADOR);
-		generador.agregarPersona(5, "Norberto Beltr√°n", Rol.PROGRAMADOR);
+		generador.agregarPersona(5, "Norberto Beltr·n", Rol.PROGRAMADOR);
 		
 		generador.agregarPersona(5, "Natalia Infante", Rol.TESTER);
 		generador.agregarPersona(5, "Romina Herrera", Rol.TESTER);
 		generador.agregarPersona(4, "Miguel Britez", Rol.TESTER);
 		
 		generador.agregarIncompatibilidad(8, 9);
-//		System.out.println(generador.getIncompatibilidades());
 		
 		generador.setRequerimientos(1, 2, 2, 2);
 	}

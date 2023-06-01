@@ -29,8 +29,7 @@ public class GeneradorGrupoMejorCalificado {
 	
 	
 	public void agregarPersona(int rendimiento, String nombre, Rol rol)	{
-//		personas.add(new Persona(obtenerIdDisponible(), rendimiento, nombre, rol));
-		personas.add(new Persona(rendimiento, nombre, rol));
+		personas.add(new Persona(personas.size(), rendimiento, nombre, rol));
 		incompatibles.add(new ArrayList<>());
 	}
 	
@@ -59,10 +58,6 @@ public class GeneradorGrupoMejorCalificado {
 				e.printStackTrace();
 			}
 		return solver.getGrupoMayorPuntuacion().getPersonas();
-	}
-	
-	public int obtenerIdDisponible() {
-		return personas.size();
 	}
 	
 	public List<Persona> getListaPersonas()	{
