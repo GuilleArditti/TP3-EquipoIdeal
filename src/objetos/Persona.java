@@ -18,12 +18,6 @@ public class Persona
 		setRol(rol);
 	}
 	
-	public Persona(int rendimiento,String nombre,Rol rol) {
-		this.rendimiento=rendimiento;
-		this.nombre=nombre;
-		this.rol=rol;
-	}
-	
 
 	@Override
 	public String toString()

@@ -15,10 +15,7 @@ public class Solver extends Thread
 	private Grupo grupoMayorPuntuacion;
 
 	
-	public Solver(	List<Persona> personas,
-					List<List<Integer>> incompatibles,
-					Requerimiento requeridos)
-	{
+	public Solver(List<Persona> personas, List<List<Integer>> incompatibles, Requerimiento requeridos) {
 		setPersonas(personas);
 		setIncompatibles(incompatibles);
 		setRequeridos(requeridos);
