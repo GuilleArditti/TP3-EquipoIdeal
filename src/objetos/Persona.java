@@ -2,7 +2,7 @@ package objetos;
 
 import javax.swing.ImageIcon;
 
-public class Persona
+public class Persona implements Comparable<Persona>
 {
 	private int id;
 	private int rendimiento;
@@ -85,6 +85,18 @@ public class Persona
 
 	public void setFotoDePerfil(ImageIcon fotoDePerfil) {
 		this.fotoDePerfil = fotoDePerfil;
+	}
+
+
+	@Override
+	public int compareTo(Persona o) {
+		if (this.rendimiento > o.getRendimiento())
+			return 1;
+		
+		if (this.rendimiento < o.getRendimiento())
+			return -1;
+		
+		return 0;
 	}
 	
 	
