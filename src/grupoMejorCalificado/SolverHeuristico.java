@@ -49,19 +49,19 @@ public class SolverHeuristico extends Thread {
 	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
 			List<Persona> testers) {
 		for (int i = 0; i < requeridos.getCantLiderProyecto(); i++)
-			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
 				grupoSolucion.agregar(lideresProyecto.get(i));
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
 				grupoSolucion.agregar(arquitectos.get(i));
 		
 		for (int i = 0; i < requeridos.getCantDevelopers(); i++)
-			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
 				grupoSolucion.agregar(developers.get(i));
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
 				grupoSolucion.agregar(testers.get(i));
 	}
 
