@@ -1,6 +1,7 @@
 package grupoMejorCalificado;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Collections;
 import objetos.Grupo;
@@ -24,21 +25,21 @@ public class SolverHeuristico extends Thread {
 		setRequeridos(requeridos);
 	}
 	
-	@Override
-	public void run() {
-		/**
+	/**
 		 * crear una lista para cada Rol
 		 * ordenarlas por puntuacion
 		 * seleccionar las mejores puntuaciones sin pasarme de los requisitos y sin agregar incompatibles
 		 * agregar los seleccionados a un grupo solucion
 		 */
-		
-		List<Persona> lideresProyecto = new ArrayList<>();
-		List<Persona> arquitectos = new ArrayList<>();
-		List<Persona> developers = new ArrayList<>();
-		List<Persona> testers = new ArrayList<>();
-		
+	@Override
+	public void run() {
 		grupoSolucion = new Grupo();
+		List<Persona> lideresProyecto, arquitectos, developers, testers;
+		
+		lideresProyecto = new ArrayList<>();
+		arquitectos = new ArrayList<>();
+		developers = new ArrayList<>();
+		testers = new ArrayList<>();
 		
 		separarPorRol(lideresProyecto, arquitectos, developers, testers);
 		ordenarPorRendimiento(lideresProyecto, arquitectos, developers, testers);
@@ -48,17 +49,20 @@ public class SolverHeuristico extends Thread {
 	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
 			List<Persona> testers) {
 		for (int i = 0; i < requeridos.getCantLiderProyecto(); i++)
-			if (true/* no hay conflicto */)
+			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
 				grupoSolucion.agregar(lideresProyecto.get(i));
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			grupoSolucion.agregar(arquitectos.get(i));
+			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+				grupoSolucion.agregar(arquitectos.get(i));
 		
 		for (int i = 0; i < requeridos.getCantDevelopers(); i++)
-			grupoSolucion.agregar(developers.get(i));
+			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+				grupoSolucion.agregar(developers.get(i));
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			grupoSolucion.agregar(testers.get(i));
+			if ( hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) )
+				grupoSolucion.agregar(testers.get(i));
 	}
 
 	private void ordenarPorRendimiento(List<Persona> lideresProyecto, List<Persona> arquitectos,
@@ -89,6 +93,15 @@ public class SolverHeuristico extends Thread {
 			}
 			
 		}
+	}
+	
+	private boolean hayConflicto(int id, Set<Persona> personas)
+	{
+		for (Persona persona : personas)
+			if (incompatibles.get(id).contains(persona.getId()))
+				return true;
+			
+		return false;
 	}
 
 	public List<Persona> getPersonas() {
