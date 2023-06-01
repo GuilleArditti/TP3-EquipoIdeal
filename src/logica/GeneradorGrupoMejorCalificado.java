@@ -3,8 +3,8 @@ package logica;
 import java.util.List;
 import java.util.Set;
 import grupoMejorCalificado.Solver;
+import grupoMejorCalificado.SolverHeuristico;
 import java.util.ArrayList;
-
 import objetos.Persona;
 import objetos.Requerimiento;
 import objetos.Rol;
@@ -58,6 +58,17 @@ public class GeneradorGrupoMejorCalificado {
 				e.printStackTrace();
 			}
 		return solver.getGrupoMayorPuntuacion().getPersonas();
+	}
+	
+	public Set<Persona> generarMejorEquipoHeuristico() {
+		SolverHeuristico solverH = new SolverHeuristico(personas, incompatibles, requeridos);
+		solverH.start();
+			try {
+				solverH.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		return solverH.getGrupoSolucion().getPersonas();
 	}
 	
 	public List<Persona> getListaPersonas()	{
