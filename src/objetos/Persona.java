@@ -2,17 +2,24 @@ package objetos;
 
 import javax.swing.ImageIcon;
 
-public class Persona implements Comparable<Persona>
-{
+public class Persona implements Comparable<Persona> {
+	private static int idActual = 0;
 	private int id;
 	private int rendimiento;
 	private String nombre;
 	private Rol rol;
 	private ImageIcon fotoDePerfil;
 	
-	public Persona(int id, int rendimiento, String nombre, Rol rol)
-	{
-		setId(id);
+//	public Persona(int id, int rendimiento, String nombre, Rol rol)
+//	{
+//		setId(id);
+//		setRendimiento(rendimiento);
+//		setNombre(nombre);
+//		setRol(rol);
+//	}
+	
+	public Persona(int rendimiento, String nombre, Rol rol) {
+		setId();
 		setRendimiento(rendimiento);
 		setNombre(nombre);
 		setRol(rol);
@@ -20,16 +27,14 @@ public class Persona implements Comparable<Persona>
 	
 
 	@Override
-	public String toString()
-	{
-		return nombre + " , " + rol;
+	public String toString() {
+		return nombre + " - " + rol;
 //		return "Persona [id=" + id + ", rendimiento=" + rendimiento
 //				+ ", nombre=" + nombre + ", rol=" + rol + "]";
 	}
 	
 	@Override
-	public boolean equals(Object other)
-	{
+	public boolean equals(Object other)	{
 		Persona otra = (Persona) other;
 		
 		return this.rendimiento == otra.getRendimiento()
@@ -37,45 +42,43 @@ public class Persona implements Comparable<Persona>
 				&& this.rol.equals(otra.getRol());
 	}
 
-	public int getId()
-	{
+	public int getId()	{
 		return id;
 	}
 
-	private void setId(int id)
-	{
-		this.id = id;
+//	private void setId(int id)
+//	{
+//		this.id = id;
+//	}
+//	
+	private void setId() {
+		this.id = idActual;
+		this.idActual++;
 	}
 
-	public int getRendimiento()
-	{
+	public int getRendimiento() {
 		return rendimiento;
 	}
 
-	public void setRendimiento(int rendimiento)
-	{
+	public void setRendimiento(int rendimiento)	{
 		if ( rendimiento < 1 || rendimiento > 5 )
 			throw new IllegalArgumentException("El rendimiento debe estar entre 1 - 5");
 		this.rendimiento = rendimiento;
 	}
 	
-	public String getNombre()
-	{
+	public String getNombre() {
 		return nombre;
 	}
 	
-	public void setNombre(String nombre)
-	{
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public Rol getRol()
-	{
+	public Rol getRol()	{
 		return rol;
 	}
 
-	public void setRol(Rol rol)
-	{
+	public void setRol(Rol rol)	{
 		this.rol = rol;
 	}
 

@@ -10,35 +10,31 @@ import objetos.Requerimiento;
 import objetos.Rol;
 
 
-public class GeneradorGrupoMejorCalificado
-{
+public class GeneradorGrupoMejorCalificado {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
 	
 	
-	public GeneradorGrupoMejorCalificado()
-	{
+	public GeneradorGrupoMejorCalificado() {
 
 		personas = new ArrayList<>();
 		incompatibles = new ArrayList<>();
 	}
 	
-	public void agregarPersona(Persona p)
-	{
+	public void agregarPersona(Persona p) {
 		personas.add(p);
 		incompatibles.add(new ArrayList<>());
 	}
 	
 	
-	public void agregarPersona(int rendimiento, String nombre, Rol rol)
-	{
-		personas.add(new Persona(obtenerIdDisponible(), rendimiento, nombre, rol));
+	public void agregarPersona(int rendimiento, String nombre, Rol rol)	{
+//		personas.add(new Persona(obtenerIdDisponible(), rendimiento, nombre, rol));
+		personas.add(new Persona(rendimiento, nombre, rol));
 		incompatibles.add(new ArrayList<>());
 	}
 	
-	public void agregarIncompatibilidad(int id, int idIncompatible)
-	{
+	public void agregarIncompatibilidad(int id, int idIncompatible)	{
 		if (id >= incompatibles.size())
 			throw new RuntimeException("ID no válido: " + id);
 		if (idIncompatible >= incompatibles.size())
@@ -49,14 +45,12 @@ public class GeneradorGrupoMejorCalificado
 	}
 	
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos,
-										int cantDevelopers, int cantTesters)
-	{
+										int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
 												cantDevelopers, cantTesters);
 	}
 	
-	public Set<Persona> generarMejorEquipo()
-	{
+	public Set<Persona> generarMejorEquipo() {
 		Solver solver = new Solver(personas, incompatibles, requeridos);
 		solver.start();
 			try {
@@ -71,23 +65,19 @@ public class GeneradorGrupoMejorCalificado
 		return personas.size();
 	}
 	
-	public List<Persona> getListaPersonas()
-	{
+	public List<Persona> getListaPersonas()	{
 		return personas;
 	}
 	
-	public List<Integer> getIncompatibilidadesById(int id)
-	{
+	public List<Integer> getIncompatibilidadesById(int id)	{
 		return incompatibles.get(id);
 	}
 	
-	public List<List<Integer>> getIncompatibilidades()
-	{
+	public List<List<Integer>> getIncompatibilidades()	{
 		return incompatibles;
 	}
 	
-	public Requerimiento getRequerimientos()
-	{
+	public Requerimiento getRequerimientos() {
 		return requeridos;
 	}
 }

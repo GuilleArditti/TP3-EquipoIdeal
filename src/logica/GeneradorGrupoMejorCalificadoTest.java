@@ -48,9 +48,10 @@ public class GeneradorGrupoMejorCalificadoTest {
 		
 		int rendimientoGlobal = 0;
 		
-		for (Persona persona : resultado)
+		for (Persona persona : resultado) {
+//			System.out.println(persona.toString()+ " " +persona.getRendimiento()+ " id "+persona.getId());
 			rendimientoGlobal += persona.getRendimiento();
-		
+		}
 		return rendimientoGlobal;
 	}
 
@@ -71,6 +72,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarPersona(4, "Miguel Britez", Rol.TESTER);
 		
 		generador.agregarIncompatibilidad(8, 9);
+//		System.out.println(generador.getIncompatibilidades());
 		
 		generador.setRequerimientos(1, 2, 2, 2);
 	}

@@ -84,6 +84,7 @@ public class EquipoIdeal implements ActionListener, ListSelectionListener{
 	private void initialize() {
 		
 		frame = new JFrame();
+		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setBackground(new Color(64, 128, 128));
 		frame.setBounds(100, 100, 700, 757);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -257,7 +258,8 @@ public class EquipoIdeal implements ActionListener, ListSelectionListener{
 			if(!nombre.isEmpty()) {	
 				int rendimiento=Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese la calificacion historica de " + nombre,"Rendimiento", JOptionPane.PLAIN_MESSAGE,null,new Object []{1,2,3,4,5},null).toString());
 				Rol rol=(Rol) JOptionPane.showInputDialog(null,"Seleccione el rol de "+ nombre, "Rol",JOptionPane.PLAIN_MESSAGE,null,Rol.values(),null);
-				Persona persona= new Persona(generador.getListaPersonas().size(),rendimiento, nombre, rol);
+//				Persona persona= new Persona(generador.getListaPersonas().size(),rendimiento, nombre, rol);
+				Persona persona= new Persona(rendimiento, nombre, rol);
 				elegirFoto(persona);
 				generador.agregarPersona(persona);
 				mostrarEmpleadoEnLista(persona);
