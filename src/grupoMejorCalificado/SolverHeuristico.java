@@ -3,11 +3,9 @@ package grupoMejorCalificado;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import objetos.Grupo;
 import objetos.Persona;
 import objetos.Requerimiento;
-import objetos.Rol;
 
 public class SolverHeuristico extends Thread {
 	
