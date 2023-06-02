@@ -48,29 +48,45 @@ public class SolverHeuristico extends Thread {
 
 	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
 			List<Persona> testers) {
-		for (int i = 0; i < requeridos.getCantLiderProyecto(); i++)
+		int agregados = 0;
+		for (int i = 0; i < lideresProyecto.size(); i++) {
 			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(lideresProyecto.get(i));
-				System.out.println(lideresProyecto.get(i));
+				agregados++;
 			}
+			if ( agregados == requeridos.getCantLiderProyecto() )
+				break;
+		}
 		
-		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
+		agregados = 0;
+		for (int i = 0; i < arquitectos.size(); i++) {
 			if ( !hayConflicto(arquitectos.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(arquitectos.get(i));
-				System.out.println(arquitectos.get(i));
+				agregados++;
 			}
+			if ( agregados == requeridos.getCantArquitectos() )
+				break;
+		}
 		
-		for (int i = 0; i < requeridos.getCantDevelopers(); i++)
+		agregados = 0;
+		for (int i = 0; i < developers.size(); i++) {
 			if ( !hayConflicto(developers.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(developers.get(i));
-				System.out.println(developers.get(i));
+				agregados++;
 			}
+			if ( agregados == requeridos.getCantDevelopers() )
+				break;
+		}
 		
-		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
+		agregados = 0;
+		for (int i = 0; i < testers.size(); i++) {
 			if ( !hayConflicto(testers.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(testers.get(i));
-				System.out.println(testers.get(i));
+				agregados++;
 			}
+			if ( agregados == requeridos.getCantTesters() )
+				break;
+		}
 	}
 
 	private void ordenarPorRendimiento(List<Persona> lideresProyecto, List<Persona> arquitectos,
@@ -106,10 +122,9 @@ public class SolverHeuristico extends Thread {
 	private boolean hayConflicto(int id, Set<Persona> personas)
 	{
 		for (Persona persona : personas)
-			if (incompatibles.get(id).contains(persona.getId())) {
-				System.out.println("conflicto detectado");
+			if (incompatibles.get(id).contains(persona.getId()))
 				return true;
-			}
+		
 		return false;
 	}
 
