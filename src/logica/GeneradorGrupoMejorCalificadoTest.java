@@ -48,7 +48,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 		
 		armarGrupo();
 		Set<Persona> resultado = generador.generarMejorEquipoHeuristico();
-		System.out.println(resultado);
+		
 		for (Persona persona : resultado)
 			rendimientoObtenido += persona.getRendimiento();
 		
@@ -57,7 +57,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 
 	private int resultadoMejorEquipo() {
 		Set<Persona> resultado = generador.generarMejorEquipo();
-
+		mostrarSet(resultado);
 		int rendimientoGlobal = 0;
 
 		for (Persona persona : resultado)
@@ -79,11 +79,17 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarPersona(5, "Dev3", Rol.PROGRAMADOR);
 
 		generador.agregarPersona(5, "Tester1", Rol.TESTER);
-		generador.agregarPersona(1, "Tester2", Rol.TESTER);
+		generador.agregarPersona(5, "Tester2", Rol.TESTER);
 		generador.agregarPersona(4, "Tester3", Rol.TESTER);
 
 		generador.agregarIncompatibilidad(8, 9);
 
 		generador.setRequerimientos(1, 2, 2, 2);
+	}
+	
+	private void mostrarSet(Set<Persona> personas) {
+		
+		for (Persona persona : personas)
+			System.out.println(persona);
 	}
 }
