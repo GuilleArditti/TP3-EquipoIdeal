@@ -14,7 +14,7 @@ public class GeneradorGrupoMejorCalificado {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
-	
+	private Solver solver;
 	
 	public GeneradorGrupoMejorCalificado() {
 
@@ -50,7 +50,7 @@ public class GeneradorGrupoMejorCalificado {
 	}
 	
 	public Set<Persona> generarMejorEquipo() {
-		Solver solver = new Solver(personas, incompatibles, requeridos);
+		solver = new Solver(personas, incompatibles, requeridos);
 		solver.start();
 			try {
 				solver.join();
@@ -85,5 +85,13 @@ public class GeneradorGrupoMejorCalificado {
 	
 	public Requerimiento getRequerimientos() {
 		return requeridos;
+	}
+	
+	public int getCantRecursiones() {
+		if (solver == null) {
+			throw new RuntimeException("Debe cargar personas, requisitos e incompatibilidades antes.");
+		}
+		
+		return solver.getCantRecursiones();
 	}
 }
