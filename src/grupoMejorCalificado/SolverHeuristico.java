@@ -55,19 +55,19 @@ public class SolverHeuristico extends Thread {
 			}
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) ) {
+			if ( !hayConflicto(arquitectos.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(arquitectos.get(i));
 				System.out.println(arquitectos.get(i));
 			}
 		
 		for (int i = 0; i < requeridos.getCantDevelopers(); i++)
-			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) ) {
+			if ( !hayConflicto(developers.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(developers.get(i));
 				System.out.println(developers.get(i));
 			}
 		
 		for (int i = 0; i < requeridos.getCantArquitectos(); i++)
-			if ( !hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas()) ) {
+			if ( !hayConflicto(testers.get(i).getId(), grupoSolucion.getPersonas()) ) {
 				grupoSolucion.agregar(testers.get(i));
 				System.out.println(testers.get(i));
 			}

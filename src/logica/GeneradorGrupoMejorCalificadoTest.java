@@ -48,10 +48,10 @@ public class GeneradorGrupoMejorCalificadoTest {
 		
 		armarGrupo();
 		Set<Persona> resultado = generador.generarMejorEquipoHeuristico();
-//		mostrarSet(resultado);
+		
 		for (Persona persona : resultado)
 			rendimientoObtenido += persona.getRendimiento();
-		System.out.println(generador.getIncompatibilidades());
+		
 		assertEquals(rendimientoEsperado, rendimientoObtenido);
 	}
 
