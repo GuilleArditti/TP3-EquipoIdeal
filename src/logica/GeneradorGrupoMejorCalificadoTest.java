@@ -39,6 +39,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 		int rendimientoEsperado = 32;
 		int rendimientoObtenido = resultadoMejorEquipo();
 		assertEquals(rendimientoEsperado, rendimientoObtenido);
+		System.out.println("Cantidad de llamadas recursivas: " + generador.getCantRecursiones());
 	}
 
 	@Test
