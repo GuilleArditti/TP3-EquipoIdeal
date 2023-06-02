@@ -14,9 +14,9 @@ public class GeneradorGrupoMejorCalificado {
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
 	private Solver solver;
+	private long initialTime;
 
 	public GeneradorGrupoMejorCalificado() {
-
 		personas = new ArrayList<>();
 		incompatibles = new ArrayList<>();
 	}
@@ -32,20 +32,20 @@ public class GeneradorGrupoMejorCalificado {
 	}
 
 	public void agregarIncompatibilidad(int id, int idIncompatible) {
-		if (id >= incompatibles.size())
-			throw new RuntimeException("ID no válido: " + id);
-		if (idIncompatible >= incompatibles.size())
-			throw new RuntimeException("ID no válido: " + idIncompatible);
+		validarID(id, idIncompatible);
 
 		incompatibles.get(id).add(idIncompatible);
 		incompatibles.get(idIncompatible).add(id);
 	}
 
-	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
-		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
+	public void setRequerimientos(	int cantLiderProyecto, int cantArquitectos,
+									int cantDevelopers, int cantTesters) {
+		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
+											cantDevelopers, cantTesters);
 	}
 
 	public Set<Persona> generarMejorEquipo() {
+		iniciarCronometro();
 		solver = new Solver(personas, incompatibles, requeridos);
 		solver.start();
 		try {
@@ -53,10 +53,13 @@ public class GeneradorGrupoMejorCalificado {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out.print("Algoritmo: ");
+		mostrarCronometroEnConsola();
 		return solver.getGrupoMayorPuntuacion().getPersonas();
 	}
-
+	
 	public Set<Persona> generarMejorEquipoHeuristico() {
+		iniciarCronometro();
 		SolverHeuristico solverH = new SolverHeuristico(personas, incompatibles, requeridos);
 		solverH.start();
 		try {
@@ -64,6 +67,8 @@ public class GeneradorGrupoMejorCalificado {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out.print("Heuristica: ");
+		mostrarCronometroEnConsola();
 		return solverH.getGrupoSolucion().getPersonas();
 	}
 
@@ -84,10 +89,24 @@ public class GeneradorGrupoMejorCalificado {
 	}
 
 	public int getCantRecursiones() {
-		if (solver == null) {
+		if (solver == null)
 			throw new RuntimeException("Debe cargar personas, requisitos e incompatibilidades antes.");
-		}
 
 		return solver.getCantRecursiones();
+	}
+	
+	private void mostrarCronometroEnConsola() {
+		System.out.println( (System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
+	}
+
+	private void iniciarCronometro() {
+		initialTime = System.currentTimeMillis();
+	}
+	
+	private void validarID(int id, int idIncompatible) {
+		if (id >= incompatibles.size() || id < 0)
+			throw new RuntimeException("ID no válido: " + id);
+		if (idIncompatible >= incompatibles.size() || id < 0)
+			throw new RuntimeException("ID no válido: " + idIncompatible);
 	}
 }
