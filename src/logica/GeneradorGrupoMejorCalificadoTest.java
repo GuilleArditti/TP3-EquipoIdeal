@@ -46,13 +46,13 @@ public class GeneradorGrupoMejorCalificadoTest {
 	public void generarMejorEquipoHeuristicoTest() {
 		int rendimientoEsperado = 32;
 		int rendimientoObtenido = 0;
-		
+
 		armarGrupo();
 		Set<Persona> resultado = generador.generarMejorEquipoHeuristico();
-		
+
 		for (Persona persona : resultado)
 			rendimientoObtenido += persona.getRendimiento();
-		
+
 		assertEquals(rendimientoEsperado, rendimientoObtenido);
 	}
 

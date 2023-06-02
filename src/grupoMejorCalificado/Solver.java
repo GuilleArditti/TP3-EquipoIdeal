@@ -49,7 +49,7 @@ public class Solver extends Thread {
 		actual.agregar(personas.get(id));
 		cantRecursiones++;
 		generarDesde(id + 1);
-		
+
 		actual.quitar(personas.get(id));
 		cantRecursiones++;
 		generarDesde(id + 1);
@@ -89,7 +89,7 @@ public class Solver extends Thread {
 	private void setCantRecursiones(int n) {
 		this.cantRecursiones = n;
 	}
-	
+
 	public int getCantRecursiones() {
 		return cantRecursiones;
 	}
