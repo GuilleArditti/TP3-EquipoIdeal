@@ -50,10 +50,15 @@ public class GeneradorGrupoMejorCalificadoTest {
 		armarGrupo();
 		Set<Persona> resultado = generador.generarMejorEquipoHeuristico();
 
-		for (Persona persona : resultado)
-			rendimientoObtenido += persona.getRendimiento();
+		rendimientoObtenido = calcularRendimiento(rendimientoObtenido, resultado);
 
 		assertEquals(rendimientoEsperado, rendimientoObtenido);
+	}
+
+	private int calcularRendimiento(int rendimientoObtenido, Set<Persona> resultado) {
+		for (Persona persona : resultado)
+			rendimientoObtenido += persona.getRendimiento();
+		return rendimientoObtenido;
 	}
 
 	private int resultadoMejorEquipo() {
@@ -61,8 +66,7 @@ public class GeneradorGrupoMejorCalificadoTest {
 
 		int rendimientoGlobal = 0;
 
-		for (Persona persona : resultado)
-			rendimientoGlobal += persona.getRendimiento();
+		rendimientoGlobal = calcularRendimiento(rendimientoGlobal, resultado);
 
 		return rendimientoGlobal;
 	}

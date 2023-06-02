@@ -38,10 +38,8 @@ public class GeneradorGrupoMejorCalificado {
 		incompatibles.get(idIncompatible).add(id);
 	}
 
-	public void setRequerimientos(	int cantLiderProyecto, int cantArquitectos,
-									int cantDevelopers, int cantTesters) {
-		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos,
-											cantDevelopers, cantTesters);
+	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
+		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
 	}
 
 	public Set<Persona> generarMejorEquipo() {
@@ -57,7 +55,7 @@ public class GeneradorGrupoMejorCalificado {
 		mostrarCronometroEnConsola();
 		return solver.getGrupoMayorPuntuacion().getPersonas();
 	}
-	
+
 	public Set<Persona> generarMejorEquipoHeuristico() {
 		iniciarCronometro();
 		SolverHeuristico solverH = new SolverHeuristico(personas, incompatibles, requeridos);
@@ -94,15 +92,15 @@ public class GeneradorGrupoMejorCalificado {
 
 		return solver.getCantRecursiones();
 	}
-	
+
 	private void mostrarCronometroEnConsola() {
-		System.out.println( (System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
+		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
 	}
 
 	private void iniciarCronometro() {
 		initialTime = System.currentTimeMillis();
 	}
-	
+
 	private void validarID(int id, int idIncompatible) {
 		if (id >= incompatibles.size() || id < 0)
 			throw new RuntimeException("ID no válido: " + id);
