@@ -19,9 +19,9 @@ public class Persona implements Comparable<Persona> {
 
 	@Override
 	public String toString() {
-		return nombre + " - " + rol;
+		return id + " " + nombre;
 //		return "Persona [id=" + id + ", rendimiento=" + rendimiento
-//				+ ", nombre=" + nombre + ", rol=" + rol + "]";
+//				+ ", nombre=" + nombre + ", rol=" + rol.toString() + "]";
 	}
 	
 	@Override
@@ -79,10 +79,10 @@ public class Persona implements Comparable<Persona> {
 	@Override
 	public int compareTo(Persona o) {
 		if (this.rendimiento > o.getRendimiento())
-			return 1;
+			return -1;
 		
 		if (this.rendimiento < o.getRendimiento())
-			return -1;
+			return 1;
 		
 		return 0;
 	}
