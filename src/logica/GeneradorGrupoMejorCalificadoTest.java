@@ -86,10 +86,4 @@ public class GeneradorGrupoMejorCalificadoTest {
 
 		generador.setRequerimientos(1, 2, 2, 2);
 	}
-	
-	private void mostrarSet(Set<Persona> personas) {
-		
-		for (Persona persona : personas)
-			System.out.println(persona);
-	}
 }
