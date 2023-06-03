@@ -92,6 +92,10 @@ public class GeneradorGrupoMejorCalificado {
 
 		return solver.getCantRecursiones();
 	}
+	
+	private String obtenerTiempoDeEjecucion() {
+		return ((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
+	}
 
 	private void mostrarCronometroEnConsola() {
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");

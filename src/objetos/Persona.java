@@ -18,7 +18,7 @@ public class Persona implements Comparable<Persona> {
 
 	@Override
 	public String toString() {
-		return id + " " + nombre + "(" + rendimiento + ")";
+		return id + " - " + nombre + " , " + rol + "";
 	}
 
 	@Override
