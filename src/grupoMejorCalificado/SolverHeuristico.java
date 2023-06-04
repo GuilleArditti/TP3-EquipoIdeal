@@ -40,10 +40,13 @@ public class SolverHeuristico extends Thread {
 		separarPorRol(lideresProyecto, arquitectos, programadores, testers);
 		ordenarPorRendimiento(lideresProyecto, arquitectos, programadores, testers);
 		agregarLosMejores(lideresProyecto, arquitectos, programadores, testers);
+		
+		if (!tieneCantEspecialistasRequerida())
+			throw new RuntimeException("No hay suficientes especialistas para cubrir los los puestos.");
 	}
 
-	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> programadores,
-			List<Persona> testers) {
+	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos,
+			List<Persona> programadores, List<Persona> testers) {
 		agregarLosMejoresPorRol(lideresProyecto, requeridos.getCantLiderProyecto());
 		agregarLosMejoresPorRol(arquitectos, requeridos.getCantArquitectos());
 		agregarLosMejoresPorRol(programadores, requeridos.getCantProgramadores());
@@ -92,6 +95,13 @@ public class SolverHeuristico extends Thread {
 			}
 
 		}
+	}
+	
+	private boolean tieneCantEspecialistasRequerida() {
+		return 	   grupoSolucion.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
+				&& grupoSolucion.getCantArquitectos() == requeridos.getCantArquitectos()
+				&& grupoSolucion.getCantProgramadores() == requeridos.getCantProgramadores()
+				&& grupoSolucion.getCantTesters() == requeridos.getCantTesters();
 	}
 
 	private boolean hayConflicto(int id, Set<Persona> personas) {
