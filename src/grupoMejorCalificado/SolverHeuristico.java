@@ -30,31 +30,33 @@ public class SolverHeuristico extends Thread {
 	@Override
 	public void run() {
 		grupoSolucion = new Grupo();
-		List<Persona> lideresProyecto, arquitectos, developers, testers;
+		List<Persona> lideresProyecto, arquitectos, programadores, testers;
 
 		lideresProyecto = new ArrayList<>();
 		arquitectos = new ArrayList<>();
-		developers = new ArrayList<>();
+		programadores = new ArrayList<>();
 		testers = new ArrayList<>();
 
-		separarPorRol(lideresProyecto, arquitectos, developers, testers);
-		ordenarPorRendimiento(lideresProyecto, arquitectos, developers, testers);
-		agregarLosMejores(lideresProyecto, arquitectos, developers, testers);
+		separarPorRol(lideresProyecto, arquitectos, programadores, testers);
+		ordenarPorRendimiento(lideresProyecto, arquitectos, programadores, testers);
+		agregarLosMejores(lideresProyecto, arquitectos, programadores, testers);
 	}
 
-	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
+	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> programadores,
 			List<Persona> testers) {
 		agregarLosMejoresPorRol(lideresProyecto, requeridos.getCantLiderProyecto());
 		agregarLosMejoresPorRol(arquitectos, requeridos.getCantArquitectos());
-		agregarLosMejoresPorRol(developers, requeridos.getCantArquitectos());
+		agregarLosMejoresPorRol(programadores, requeridos.getCantProgramadores());
 		agregarLosMejoresPorRol(testers, requeridos.getCantTesters());
 	}
 
 	private void agregarLosMejoresPorRol(List<Persona> especialistas, int cantRequerida) {
 		int agregados = 0;
+		Persona persona;
 		for (int i = 0; i < especialistas.size(); i++) {
-			if (!hayConflicto(especialistas.get(i).getId(), grupoSolucion.getPersonas())) {
-				grupoSolucion.agregar(especialistas.get(i));
+			persona = especialistas.get(i);
+			if (!hayConflicto(persona.getId(), grupoSolucion.getPersonas())) {
+				grupoSolucion.agregar(persona);
 				agregados++;
 			}
 			if (agregados == cantRequerida)
@@ -63,14 +65,14 @@ public class SolverHeuristico extends Thread {
 	}
 
 	private void ordenarPorRendimiento(List<Persona> lideresProyecto, List<Persona> arquitectos,
-			List<Persona> developers, List<Persona> testers) {
+			List<Persona> programadores, List<Persona> testers) {
 		Collections.sort(lideresProyecto);
 		Collections.sort(arquitectos);
-		Collections.sort(developers);
+		Collections.sort(programadores);
 		Collections.sort(testers);
 	}
 
-	private void separarPorRol(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
+	private void separarPorRol(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> programadores,
 			List<Persona> testers) {
 
 		for (Persona persona : personas) {
@@ -82,7 +84,7 @@ public class SolverHeuristico extends Thread {
 				arquitectos.add(persona);
 				break;
 			case PROGRAMADOR:
-				developers.add(persona);
+				programadores.add(persona);
 				break;
 			case TESTER:
 				testers.add(persona);

@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Grupo {
 	private int cantLiderProyecto;
 	private int cantArquitectos;
-	private int cantDevelopers;
+	private int cantProgramadores;
 	private int cantTesters;
 	private int tamano;
 	private int puntuacion;
@@ -29,7 +29,7 @@ public class Grupo {
 			cantArquitectos++;
 			break;
 		case PROGRAMADOR:
-			cantDevelopers++;
+			cantProgramadores++;
 			break;
 		case TESTER:
 			cantTesters++;
@@ -50,7 +50,7 @@ public class Grupo {
 			cantArquitectos--;
 			break;
 		case PROGRAMADOR:
-			cantDevelopers--;
+			cantProgramadores--;
 			break;
 		case TESTER:
 			cantTesters--;
@@ -61,7 +61,7 @@ public class Grupo {
 	public void clonar(Grupo otro) {
 		setCantLiderProyecto(0);
 		setCantArquitectos(0);
-		setCantDevelopers(0);
+		setCantProgramadores(0);
 		setCantTesters(0);
 		setTamano(0);
 		setPuntuacion(0);
@@ -76,7 +76,7 @@ public class Grupo {
 	public String toString() {
 		return "Grupo [tamano=" + tamano + ", puntuacion=" + puntuacion + ",\n personas=" + personas + "]\n"
 				+ " Lider de Proyecto: " + cantLiderProyecto + "\n" + " Arquitectos: " + cantArquitectos + "\n"
-				+ " Programadores: " + cantDevelopers + "\n" + " Testers: " + cantTesters + "\n";
+				+ " Programadores: " + cantProgramadores + "\n" + " Testers: " + cantTesters + "\n";
 	}
 
 	public int getCantLiderProyecto() {
@@ -95,12 +95,12 @@ public class Grupo {
 		this.cantArquitectos = cantArquitectos;
 	}
 
-	public int getCantDevelopers() {
-		return cantDevelopers;
+	public int getCantProgramadores() {
+		return cantProgramadores;
 	}
 
-	public void setCantDevelopers(int cantDevelopers) {
-		this.cantDevelopers = cantDevelopers;
+	public void setCantProgramadores(int cantProgramadores) {
+		this.cantProgramadores = cantProgramadores;
 	}
 
 	public int getCantTesters() {

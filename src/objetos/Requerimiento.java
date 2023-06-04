@@ -3,23 +3,23 @@ package objetos;
 public class Requerimiento {
 	private int cantLiderProyecto;
 	private int cantArquitectos;
-	private int cantDevelopers;
+	private int cantProgramadores;
 	private int cantTesters;
 	private int tamano;
 
-	public Requerimiento(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
+	public Requerimiento(int cantLiderProyecto, int cantArquitectos, int cantProgramadores, int cantTesters) {
 		setCantLiderProyecto(cantLiderProyecto);
 		setCantArquitectos(cantArquitectos);
-		setCantDevelopers(cantDevelopers);
+		setCantProgramadores(cantProgramadores);
 		setCantTesters(cantTesters);
-		setTamano(cantLiderProyecto + cantArquitectos + cantDevelopers + cantTesters);
+		setTamano(cantLiderProyecto + cantArquitectos + cantProgramadores + cantTesters);
 	}
 
 	@Override
 	public String toString() {
 		return "Requerimientos \n Lider de Proyecto: " + cantLiderProyecto + "\n Arquitectos: " + cantArquitectos
-				+ "\n Developers: " + cantDevelopers + "\n Testers: " + cantTesters + "\n Integrantes del equipo: "
-				+ tamano;
+				+ "\n Programadores: " + cantProgramadores + "\n Testers: " + cantTesters
+				+ "\n Integrantes del equipo: " + tamano;
 	}
 
 	public int getCantLiderProyecto() {
@@ -38,12 +38,12 @@ public class Requerimiento {
 		this.cantArquitectos = cantArquitectos;
 	}
 
-	public int getCantDevelopers() {
-		return cantDevelopers;
+	public int getCantProgramadores() {
+		return cantProgramadores;
 	}
 
-	private void setCantDevelopers(int cantDevelopers) {
-		this.cantDevelopers = cantDevelopers;
+	private void setCantProgramadores(int cantProgramadores) {
+		this.cantProgramadores = cantProgramadores;
 	}
 
 	public int getCantTesters() {
