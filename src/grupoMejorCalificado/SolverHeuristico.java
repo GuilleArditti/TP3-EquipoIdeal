@@ -44,43 +44,20 @@ public class SolverHeuristico extends Thread {
 
 	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos, List<Persona> developers,
 			List<Persona> testers) {
+		agregarLosMejoresPorRol(lideresProyecto, requeridos.getCantLiderProyecto());
+		agregarLosMejoresPorRol(arquitectos, requeridos.getCantArquitectos());
+		agregarLosMejoresPorRol(developers, requeridos.getCantArquitectos());
+		agregarLosMejoresPorRol(testers, requeridos.getCantTesters());
+	}
+
+	private void agregarLosMejoresPorRol(List<Persona> especialistas, int cantRequerida) {
 		int agregados = 0;
-		for (int i = 0; i < lideresProyecto.size(); i++) {
-			if (!hayConflicto(lideresProyecto.get(i).getId(), grupoSolucion.getPersonas())) {
-				grupoSolucion.agregar(lideresProyecto.get(i));
+		for (int i = 0; i < especialistas.size(); i++) {
+			if (!hayConflicto(especialistas.get(i).getId(), grupoSolucion.getPersonas())) {
+				grupoSolucion.agregar(especialistas.get(i));
 				agregados++;
 			}
-			if (agregados == requeridos.getCantLiderProyecto())
-				break;
-		}
-
-		agregados = 0;
-		for (int i = 0; i < arquitectos.size(); i++) {
-			if (!hayConflicto(arquitectos.get(i).getId(), grupoSolucion.getPersonas())) {
-				grupoSolucion.agregar(arquitectos.get(i));
-				agregados++;
-			}
-			if (agregados == requeridos.getCantArquitectos())
-				break;
-		}
-
-		agregados = 0;
-		for (int i = 0; i < developers.size(); i++) {
-			if (!hayConflicto(developers.get(i).getId(), grupoSolucion.getPersonas())) {
-				grupoSolucion.agregar(developers.get(i));
-				agregados++;
-			}
-			if (agregados == requeridos.getCantDevelopers())
-				break;
-		}
-
-		agregados = 0;
-		for (int i = 0; i < testers.size(); i++) {
-			if (!hayConflicto(testers.get(i).getId(), grupoSolucion.getPersonas())) {
-				grupoSolucion.agregar(testers.get(i));
-				agregados++;
-			}
-			if (agregados == requeridos.getCantTesters())
+			if (agregados == cantRequerida)
 				break;
 		}
 	}
