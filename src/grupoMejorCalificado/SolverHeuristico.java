@@ -39,21 +39,21 @@ public class SolverHeuristico extends Thread {
 
 		separarPorRol(lideresProyecto, arquitectos, programadores, testers);
 		ordenarPorRendimiento(lideresProyecto, arquitectos, programadores, testers);
-		agregarLosMejores(lideresProyecto, arquitectos, programadores, testers);
+		seleccionarLosMejores(lideresProyecto, arquitectos, programadores, testers);
 		
 		if (!tieneCantEspecialistasRequerida())
 			throw new RuntimeException("No hay suficientes especialistas para cubrir los los puestos.");
 	}
 
-	private void agregarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos,
+	private void seleccionarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos,
 			List<Persona> programadores, List<Persona> testers) {
-		agregarLosMejoresPorRol(lideresProyecto, requeridos.getCantLiderProyecto());
-		agregarLosMejoresPorRol(arquitectos, requeridos.getCantArquitectos());
-		agregarLosMejoresPorRol(programadores, requeridos.getCantProgramadores());
-		agregarLosMejoresPorRol(testers, requeridos.getCantTesters());
+		seleccionarPorRol(lideresProyecto, requeridos.getCantLiderProyecto());
+		seleccionarPorRol(arquitectos, requeridos.getCantArquitectos());
+		seleccionarPorRol(programadores, requeridos.getCantProgramadores());
+		seleccionarPorRol(testers, requeridos.getCantTesters());
 	}
 
-	private void agregarLosMejoresPorRol(List<Persona> especialistas, int cantRequerida) {
+	private void seleccionarPorRol(List<Persona> especialistas, int cantRequerida) {
 		int agregados = 0;
 		Persona persona;
 		for (int i = 0; i < especialistas.size(); i++) {
