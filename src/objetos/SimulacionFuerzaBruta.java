@@ -29,9 +29,6 @@ public class SimulacionFuerzaBruta extends SwingWorker<Set<Persona>, Long>{
 		
 		for(int i=2;i<= generador.getCantRecursiones();i++) {
 			barraDeProgreso.setValue(i);
-			if(barraDeProgreso.getValue()<barraDeProgreso.getMaximum()) {
-				
-			}
 		}
 		
 		return resultadoFuerzaBruta;
