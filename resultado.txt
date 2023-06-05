@@ -1,0 +1,17 @@
+Grupo Solucion (Fuerza Bruta)
+Nombre: Dev2, Rol: PROGRAMADOR, Calif.Historica: 4
+Nombre: Tester3, Rol: TESTER, Calif.Historica: 4
+Nombre: Arquitecto2, Rol: ARQUITECTO, Calif.Historica: 4
+Nombre: Dev3, Rol: PROGRAMADOR, Calif.Historica: 5
+Nombre: Lider2, Rol: LIDER_DE_PROYECTO, Calif.Historica: 5
+Nombre: Arquitecto3, Rol: ARQUITECTO, Calif.Historica: 5
+Nombre: Tester2, Rol: TESTER, Calif.Historica: 5
+
+Grupo Solucion (Heuristica)
+Nombre: Dev2, Rol: PROGRAMADOR, Calif.Historica: 4
+Nombre: Tester3, Rol: TESTER, Calif.Historica: 4
+Nombre: Arquitecto2, Rol: ARQUITECTO, Calif.Historica: 4
+Nombre: Dev3, Rol: PROGRAMADOR, Calif.Historica: 5
+Nombre: Lider2, Rol: LIDER_DE_PROYECTO, Calif.Historica: 5
+Nombre: Arquitecto3, Rol: ARQUITECTO, Calif.Historica: 5
+Nombre: Tester1, Rol: TESTER, Calif.Historica: 5

@@ -115,8 +115,8 @@ public class GeneradorGrupoMejorCalificado {
 	
 	public String getEstadisticas() {
 		String cantRecursiones= "Cantidad de recursiones:" + getCantRecursiones();
-		String tiempoEjecucion= "Tiempo de ejecucion del algoritmo:" + tiempoFuerzaBruta;
-		return "Fuerza Bruta: " + "\n" + cantRecursiones + "\n" + tiempoEjecucion + "\n" + "Heuristica: " +tiempoHeuristica;
+		String tiempoEjecucion= "Tiempo de ejecucion:" + tiempoFuerzaBruta;
+		return "Fuerza Bruta: " + "\n" + cantRecursiones + "\n" + tiempoEjecucion + "\n\n" + "Heuristica: " +tiempoHeuristica;
 	}
 
 	public int getCantRecursiones() {
