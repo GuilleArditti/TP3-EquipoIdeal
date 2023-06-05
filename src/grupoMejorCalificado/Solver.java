@@ -55,7 +55,7 @@ public class Solver extends Thread {
 		generarDesde(id + 1);
 	}
 
-	private boolean cumpleTodosRequisitos() {
+	public boolean cumpleTodosRequisitos() {
 		return actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()
 				&& actual.getCantArquitectos() == requeridos.getCantArquitectos()
 				&& actual.getCantProgramadores() == requeridos.getCantProgramadores()

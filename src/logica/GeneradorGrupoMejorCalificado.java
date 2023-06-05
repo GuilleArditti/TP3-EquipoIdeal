@@ -15,6 +15,8 @@ public class GeneradorGrupoMejorCalificado {
 	private Requerimiento requeridos;
 	private Solver solver;
 	private long initialTime;
+	private String tiempoFuerzaBruta;
+	private String tiempoHeuristica;
 
 	public GeneradorGrupoMejorCalificado() {
 		personas = new ArrayList<>();
@@ -41,6 +43,31 @@ public class GeneradorGrupoMejorCalificado {
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
 	}
+	
+	public boolean cumpleRequerimientos() {
+		int cantArquitectos=0;
+		int cantLiderProyecto=0;
+		int cantTesters=0;
+		int cantProgramadores=0;
+		for(Persona persona: personas) {
+			switch (persona.getRol()) {
+			case LIDER_DE_PROYECTO:
+				cantLiderProyecto++;
+				break;
+			case ARQUITECTO:
+				cantArquitectos++;
+				break;
+			case PROGRAMADOR:
+				cantProgramadores++;
+				break;
+			case TESTER:
+				cantTesters++;
+				break;
+			}
+		}
+		return requeridos.getCantArquitectos()<=cantArquitectos && requeridos.getCantLiderProyecto()<=cantLiderProyecto
+				&& requeridos.getCantTesters()<=cantTesters && requeridos.getCantProgramadores()<=cantProgramadores;
+	}
 
 	public Set<Persona> generarMejorEquipo() {
 		iniciarCronometro();
@@ -52,7 +79,7 @@ public class GeneradorGrupoMejorCalificado {
 			e.printStackTrace();
 		}
 		System.out.print("Algoritmo: ");
-		mostrarCronometroEnConsola();
+		guardarCronometroFuerzaBruta();
 		return solver.getGrupoMayorPuntuacion().getPersonas();
 	}
 
@@ -66,7 +93,7 @@ public class GeneradorGrupoMejorCalificado {
 			e.printStackTrace();
 		}
 		System.out.print("Heuristica: ");
-		mostrarCronometroEnConsola();
+		guardarCronometroHeuristica();
 		return solverH.getGrupoSolucion().getPersonas();
 	}
 
@@ -85,6 +112,12 @@ public class GeneradorGrupoMejorCalificado {
 	public Requerimiento getRequerimientos() {
 		return requeridos;
 	}
+	
+	public String getEstadisticas() {
+		String cantRecursiones= "Cantidad de recursiones:" + getCantRecursiones();
+		String tiempoEjecucion= "Tiempo de ejecucion del algoritmo:" + tiempoFuerzaBruta;
+		return "Fuerza Bruta: " + "\n" + cantRecursiones + "\n" + tiempoEjecucion + "\n" + "Heuristica: " +tiempoHeuristica;
+	}
 
 	public int getCantRecursiones() {
 		if (solver == null)
@@ -93,17 +126,24 @@ public class GeneradorGrupoMejorCalificado {
 		return solver.getCantRecursiones();
 	}
 	
-	private String obtenerTiempoDeEjecucion() {
-		return ((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
-	}
+	
 
-	private void mostrarCronometroEnConsola() {
+	private void guardarCronometroFuerzaBruta() {
+		tiempoFuerzaBruta=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
+		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
+	}
+	
+	//Cambiar el metodo para obtener bien la estadistica de heuristica, se esta mostrando solo fuerza bruta
+	
+	private void guardarCronometroHeuristica() {
+		tiempoHeuristica=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
 	}
 
 	private void iniciarCronometro() {
 		initialTime = System.currentTimeMillis();
 	}
+	
 
 	private void validarID(int id, int idIncompatible) {
 		if (id >= incompatibles.size() || id < 0)

@@ -1,484 +1,173 @@
 package interfaz;
 
-import java.awt.EventQueue;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.List;
-import java.util.Set;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Color;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
-import logica.GeneradorGrupoMejorCalificado;
 import objetos.Persona;
-import objetos.Rol;
 
-public class EquipoIdeal implements ActionListener, ListSelectionListener {
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+
+public class EquipoIdeal implements ActionListener{
 
 	private JFrame frame;
-	private JList<Persona> listaDeEmpleados;
-	private JPanel panelDetalles;
-	private JLabel labelFoto;
-	private JLabel etiquetaRendimiento;
-	private JLabel etiquetaNombre;
-	private JLabel etiquetaRol;
-	private JButton botonVerIncompatibilidad;
-	private JButton botonAgregar;
-	private JButton botonAgregarIncompatibilidad;
-	private JButton botonGenerarGrupo;
-	private JButton botonListo;
-	private JButton botonLimpiar;
-	private JButton botonVerGrupo;
-	private JProgressBar barraDeProgreso;
-	private JPanel panelDeRequerimientos;
-	private JLabel etiquetaRequerimientos;
-	private JSpinner spinnerLider;
-	private JSpinner spinnerArquitecto;
-	private JSpinner spinnerProgramador;
-	private JSpinner spinnerTester;
-	private GeneradorGrupoMejorCalificado generador;
-	
+	private Set<Persona> grupoFuerzaBruta;
+	private Set<Persona> grupoHeuristica;
+	private JPanel panelPrincipal;
+	private JPanel panelFuerzaBruta;
+	private JPanel panelHeuristica;
+	private JButton botonGuardarResultados;
 
-	
-	public EquipoIdeal() {
 
+	public EquipoIdeal(Set<Persona> solucionFuerzaBruta, Set<Persona> solucionHeuristica) {
+		this.grupoFuerzaBruta=solucionFuerzaBruta;
+		this.grupoHeuristica=solucionHeuristica;
 		initialize();
 	}
 
 	private void initialize() {
-
-		frame = new JFrame();
-		frame.setLocationRelativeTo(null);
-		frame.setTitle("Equipo Ideal");
-		frame.getContentPane().setBackground(new Color(64, 128, 128));
-		frame.setBounds(100, 100, 700, 804);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-
-		generarCuadroDeRequerimientos();
 		
-		generarListaDeEmpleados();
+		setupFrame();
 		
-		generarPanelDeDetalles();
-
+		generarPaneles();
+		
+		generarTitulos();
+		
 		generarBotones();
-
-		generarBarraDeProgreso();
-
-	}
-
-	private void generarCuadroDeRequerimientos() {
-
-		panelDeRequerimientos = new JPanel();
-		panelDeRequerimientos.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelDeRequerimientos.setBackground(new Color(129, 146, 163));
-		panelDeRequerimientos.setBounds(10, 50, 453, 113);
-		frame.getContentPane().add(panelDeRequerimientos);
-		panelDeRequerimientos.setLayout(null);
-
-		JLabel etiquetaLider = new JLabel("Lider De Proyecto:");
-		etiquetaLider.setFont(new Font("Calibri", Font.BOLD, 15));
-		etiquetaLider.setBounds(10, 42, 121, 17);
-		panelDeRequerimientos.add(etiquetaLider);
-
-		spinnerLider = new JSpinner();
-		spinnerLider.setFont(new Font("Tahoma", Font.BOLD, 11));
-		spinnerLider.setBounds(141, 38, 48, 20);
-		panelDeRequerimientos.add(spinnerLider);
-		spinnerLider.setModel(new SpinnerNumberModel(1, 1, 5, 1));
-
-		JLabel etiquetaArquitecto = new JLabel("Arquitecto:");
-		etiquetaArquitecto.setFont(new Font("Calibri", Font.BOLD, 15));
-		etiquetaArquitecto.setBounds(10, 70, 121, 27);
-		panelDeRequerimientos.add(etiquetaArquitecto);
-
-		spinnerArquitecto = new JSpinner();
-		spinnerArquitecto.setFont(new Font("Tahoma", Font.BOLD, 11));
-		spinnerArquitecto.setModel(new SpinnerNumberModel(1, 1, 5, 1));
-		spinnerArquitecto.setBounds(141, 71, 48, 20);
-		panelDeRequerimientos.add(spinnerArquitecto);
-
-		JLabel etiquetaProgramador = new JLabel("Programador:");
-		etiquetaProgramador.setFont(new Font("Calibri", Font.BOLD, 15));
-		etiquetaProgramador.setBounds(254, 37, 94, 27);
-		panelDeRequerimientos.add(etiquetaProgramador);
-
-		spinnerProgramador = new JSpinner();
-		spinnerProgramador.setFont(new Font("Tahoma", Font.BOLD, 11));
-		spinnerProgramador.setModel(new SpinnerNumberModel(1, 1, 5, 1));
-		spinnerProgramador.setBounds(358, 38, 52, 20);
-		panelDeRequerimientos.add(spinnerProgramador);
-
-		JLabel etiquetaTester = new JLabel("Tester:");
-		etiquetaTester.setFont(new Font("Calibri", Font.BOLD, 15));
-		etiquetaTester.setBounds(254, 73, 69, 20);
-		panelDeRequerimientos.add(etiquetaTester);
-
-		spinnerTester = new JSpinner();
-		spinnerTester.setFont(new Font("Tahoma", Font.BOLD, 11));
-		spinnerTester.setModel(new SpinnerNumberModel(1, 1, 5, 1));
-		spinnerTester.setBounds(358, 72, 52, 17);
-		panelDeRequerimientos.add(spinnerTester);
-
-		etiquetaRequerimientos = new JLabel("Seleccione los requerimientos para el equipo:");
-		etiquetaRequerimientos.setBounds(10, 0, 346, 31);
-		panelDeRequerimientos.add(etiquetaRequerimientos);
-		etiquetaRequerimientos.setBackground(new Color(255, 255, 255));
-		etiquetaRequerimientos.setFont(new Font("Calibri", Font.BOLD, 18));
-
-	}
-	
-	
-	private void generarListaDeEmpleados() {
-		listaDeEmpleados = new JList<Persona>();
-		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		listaDeEmpleados.setBounds(10, 235, 271, 273);
-		listaDeEmpleados.addListSelectionListener(this);
-		frame.getContentPane().add(listaDeEmpleados);
-
-		JLabel etiqueta = new JLabel("Lista de empleados:");
-		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
-		etiqueta.setBounds(10, 198, 208, 23);
-		frame.getContentPane().add(etiqueta);
-		modelarListaEmpleados();
-	}
-
-	private void generarPanelDeDetalles() {
-		panelDetalles = new JPanel();
-		panelDetalles.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelDetalles.setBounds(403, 235, 271, 273);
-		frame.getContentPane().add(panelDetalles);
-		panelDetalles.setLayout(null);
-
-		labelFoto = new JLabel();
-		labelFoto.setBounds(10, 11, 100, 100);
-		panelDetalles.add(labelFoto);
-
-		etiquetaRendimiento = new JLabel("");
-		etiquetaRendimiento.setBounds(10, 166, 198, 25);
-		panelDetalles.add(etiquetaRendimiento);
-
-		etiquetaNombre = new JLabel("");
-		etiquetaNombre.setBounds(120, 11, 141, 25);
-		panelDetalles.add(etiquetaNombre);
-
-		etiquetaRol = new JLabel("");
-		etiquetaRol.setBounds(10, 130, 198, 25);
-		panelDetalles.add(etiquetaRol);
 		
-				botonVerIncompatibilidad = new JButton("Ver incompatibilidad");
-				botonVerIncompatibilidad.setBounds(10, 239, 185, 23);
-				panelDetalles.add(botonVerIncompatibilidad);
-				botonVerIncompatibilidad.setFont(new Font("Calibri", Font.BOLD, 15));
-				botonVerIncompatibilidad.setEnabled(false);
-				botonVerIncompatibilidad.addActionListener(this);
-
-		JLabel etiqueta = new JLabel("Detalle:");
-		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
-		etiqueta.setBounds(403, 201, 89, 17);
-		frame.getContentPane().add(etiqueta);
+		mostrarResultadoFuerzaBruta();
+		
+		mostrarResultadoHeuristica();
+		
 	}
-	
+
+	private void setupFrame() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 772, 654);
+		frame.setLocationRelativeTo(null);
+		frame.setTitle("Mejor Grupo");
+		frame.getContentPane().setLayout(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
 	private void generarBotones() {
-		botonGenerarGrupo = new JButton("Generar grupo");
-		botonGenerarGrupo.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonGenerarGrupo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonGenerarGrupo.setBounds(233, 602, 229, 43);
-		botonGenerarGrupo.addActionListener(this);
-		frame.getContentPane().add(botonGenerarGrupo);
-
-		botonAgregar = new JButton("Agregar empleado");
-		botonAgregar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonAgregar.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonAgregar.setBounds(10, 519, 208, 23);
-		botonAgregar.addActionListener(this);
-		frame.getContentPane().add(botonAgregar);
-
-		botonListo = new JButton("Listo!");
-		botonListo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonListo.setBounds(473, 128, 89, 32);
-		botonListo.addActionListener(this);
-		frame.getContentPane().add(botonListo);
-		botonListo.setFont(new Font("Calibri", Font.BOLD, 15));
-
-		botonLimpiar = new JButton("Limpiar");
-		botonLimpiar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonLimpiar.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonLimpiar.setBounds(473, 66, 89, 38);
-		botonLimpiar.addActionListener(this);
-		frame.getContentPane().add(botonLimpiar);
-
-		botonAgregarIncompatibilidad = new JButton("Agregar Incompatibilidad");
-		botonAgregarIncompatibilidad.addActionListener(this);
-		botonAgregarIncompatibilidad.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		botonAgregarIncompatibilidad.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonAgregarIncompatibilidad.setBounds(10, 553, 208, 23);
-		frame.getContentPane().add(botonAgregarIncompatibilidad);
-		
-		botonVerGrupo = new JButton("Ver grupo!");
-		botonVerGrupo.addActionListener(this);
-		botonVerGrupo.setFont(new Font("Calibri", Font.BOLD, 15));
-		botonVerGrupo.setBounds(276, 731, 139, 23);
-		botonVerGrupo.setEnabled(false);
-		frame.getContentPane().add(botonVerGrupo);
-	}
-	
-	private void generarBarraDeProgreso() {
-		barraDeProgreso = new JProgressBar();
-		barraDeProgreso.setEnabled(false);
-		barraDeProgreso.setBounds(147, 676, 415, 31);
-		frame.getContentPane().add(barraDeProgreso);
-	}
-	
-	private void confirmarRequerimiento() {
-		panelDeRequerimientos.remove(spinnerLider);
-		panelDeRequerimientos.remove(spinnerArquitecto);
-		panelDeRequerimientos.remove(spinnerProgramador);
-		panelDeRequerimientos.remove(spinnerTester);
-		botonListo.setBackground(new Color(180, 255, 180));
-		botonListo.setEnabled(false);
-		etiquetaRequerimientos.setText("Requerimientos:");
-		generador = new GeneradorGrupoMejorCalificado();
-		generador.setRequerimientos((int) spinnerLider.getValue(), (int) spinnerArquitecto.getValue(),
-				(int) spinnerProgramador.getValue(), (int) spinnerTester.getValue());
-	}
-	
-	private void limpiarSeleccion() {
-		int resultado = JOptionPane.showConfirmDialog(null, "Seguro que desea reiniciar su seleccion?", "Limpiar", 0);
-		if (resultado == 0) {
-			generador = null;
-			panelDeRequerimientos.add(spinnerLider);
-			panelDeRequerimientos.add(spinnerArquitecto);
-			panelDeRequerimientos.add(spinnerProgramador);
-			panelDeRequerimientos.add(spinnerTester);
-			botonListo.setBackground(new Color(240, 240, 240));
-			botonListo.setEnabled(true);
-			etiquetaRequerimientos.setText("Seleccione los requerimientos para el equipo:");
-		}
-	}
-
-	private void cargarEmpleado() {
-		if (generador != null) {
-			String nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre del empleado/a: ",
-					"Nombre del empleado", JOptionPane.DEFAULT_OPTION);
-			if (!nombre.isEmpty()) {
-				int rendimiento = Integer
-						.parseInt(JOptionPane
-								.showInputDialog(null, "Ingrese la calificacion historica de " + nombre, "Rendimiento",
-										JOptionPane.PLAIN_MESSAGE, null, new Object[] { 1, 2, 3, 4, 5 }, null)
-								.toString());
-				Rol rol = (Rol) JOptionPane.showInputDialog(null, "Seleccione el rol de " + nombre, "Rol",
-						JOptionPane.PLAIN_MESSAGE, null, Rol.values(), null);
-				Persona persona = new Persona(generador.getListaPersonas().size(), rendimiento, nombre, rol);
-				elegirFoto(persona);
-				generador.agregarPersona(persona);
-				mostrarEmpleadoEnLista(persona);
-			} else {
-				JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio", "Advertencia",
-						JOptionPane.WARNING_MESSAGE);
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!",
-					"Advertencia", 0);
-		}
-	}
-	
-	private void elegirFoto(Persona p) {
-		int entrada = JOptionPane.showConfirmDialog(null, "Desea agregar una foto para " + p.getNombre() + "?",
-				"Subir foto", 0);
-		if (entrada == 0) {
-			JFileChooser fileChooser = new JFileChooser();
-			String projectFolderPath = "FotosEmpleados";
-			File initialDirectory = new File(projectFolderPath);
-			fileChooser.setCurrentDirectory(initialDirectory);
-			ImageIcon iconRedimensionado = null;
-			int resultado = fileChooser.showOpenDialog(null);
-			if (resultado == JFileChooser.APPROVE_OPTION) {
-				File selectedFile = fileChooser.getSelectedFile();
-				ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
-				Image image = imageIcon.getImage();
-				Image imagenRedimensionada = image.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(),
-						Image.SCALE_DEFAULT);
-				iconRedimensionado = new ImageIcon(imagenRedimensionada);
-				p.setFotoDePerfil(iconRedimensionado);
-				JOptionPane.showMessageDialog(null, iconRedimensionado, "Imagen seleccionada:",
-						JOptionPane.PLAIN_MESSAGE);
-			}
-		} else {
-			Image image = new ImageIcon("FotosEmpleados/fotoPorDefault.png").getImage();
-			ImageIcon iconredimensionado = new ImageIcon(image.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(),
-					Image.SCALE_DEFAULT));
-			p.setFotoDePerfil(iconredimensionado);
-		}
-	}
-
-	private void agregarIncompatibilidad() {
-		if (generador == null) {
-			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!",
-					"Advertencia", 0);
-		}
-		if (generador.getListaPersonas().size() >= 2) {
-			Persona p1 = (Persona) JOptionPane.showInputDialog(null, "Seleccione un empleado:", "Incompatibilidad",
-					JOptionPane.PLAIN_MESSAGE, null, generador.getListaPersonas().toArray(), null);
-			Persona p2 = (Persona) JOptionPane.showInputDialog(null, p1.getNombre() + " es incompatible con...",
-					"Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, generador.getListaPersonas().toArray(), null);
-			if (p1.getNombre().equals(p2.getNombre())) {
-				JOptionPane.showMessageDialog(null, "Un empleado no puede ser incompatible consigo mismo", "Error", 0);
-			} else {
-				if (!generador.getIncompatibilidadesById(p1.getId()).contains(p2.getId())) {
-					generador.agregarIncompatibilidad(getIdByNombre(p1.getNombre()), getIdByNombre(p2.getNombre()));
-					JOptionPane.showMessageDialog(null,
-							"Se agrego la incompatibilidad " + p1.getNombre() + " - " + p2.getNombre(), "Exito",
-							JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "La incompatibilidad " + p1.getNombre() + " - " + p2.getNombre()
-							+ " ya fue agregada anteriormente!", "Error", 0);
-				}
-
-			}
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"Se debe tener al menos 2 empleados en el grupo para agregar una incompatibilidad", "Advertencia",
-					0);
-		}
-	}
-
-
-
-
-	private DefaultListModel<Persona> modelarListaEmpleados() {
-		DefaultListModel<Persona> modelo = new DefaultListModel<>();
-		listaDeEmpleados.setModel(modelo);
-		return modelo;
-	}
-
-	private DefaultListModel<Persona> mostrarEmpleadoEnLista(Persona persona) {
-		DefaultListModel<Persona> modelo = (DefaultListModel<Persona>) listaDeEmpleados.getModel();
-		modelo.addElement(persona);
-		return modelo;
-	}
-
-
-
-	private void mostrarSeleccion() {
-		etiquetaRendimiento
-				.setText("Calif.Historica: " + String.valueOf(listaDeEmpleados.getSelectedValue().getRendimiento()));
-		etiquetaNombre.setText(listaDeEmpleados.getSelectedValue().getNombre());
-		etiquetaRol.setText("Rol actual: " + listaDeEmpleados.getSelectedValue().getRol().toString());
-		botonVerIncompatibilidad.setEnabled(true);
-		labelFoto.setIcon(listaDeEmpleados.getSelectedValue().getFotoDePerfil());
-	}
-	
-	private void mostrarIncompatibilidades(int id) {
-		if(generador.getIncompatibilidadesById(id).isEmpty()) {
-			JOptionPane.showMessageDialog(null,
-					"El empleado no tiene incompatibilidades", "Información",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
-		else {
-			JOptionPane.showMessageDialog(null, personasIncompatiblesDeUnId(id),
-					getpersonaById(id).getNombre() + " es incompatible con: ", JOptionPane.PLAIN_MESSAGE);
-		}
+		botonGuardarResultados = new JButton("Guardar Resultados");
+		botonGuardarResultados.setFont(new Font("Calibri", Font.BOLD, 15));
+		botonGuardarResultados.setBounds(276, 562, 192, 42);
+		botonGuardarResultados.addActionListener(this);
+		panelPrincipal.add(botonGuardarResultados);
 		
 	}
 
-	private String personasIncompatiblesDeUnId(int id) {
-		String incompatibles = "";
-		List<Integer> IDs = generador.getIncompatibilidadesById(id);
-		for (int identificacion : IDs) {
-			incompatibles = incompatibles + getpersonaById(identificacion).toString() + "\n";
-		}
-
-		return incompatibles;
+	private void generarTitulos() {
+		JLabel etiquetaFuerzaBruta = new JLabel("Solucion con Fuerza Bruta:");
+		etiquetaFuerzaBruta.setHorizontalAlignment(SwingConstants.CENTER);
+		etiquetaFuerzaBruta.setFont(new Font("Calibri", Font.BOLD, 19));
+		etiquetaFuerzaBruta.setBounds(62, 89, 254, 27);
+		panelPrincipal.add(etiquetaFuerzaBruta);
+		
+		JLabel etiquetaHeuristica = new JLabel("Solucion con Heuristica:");
+		etiquetaHeuristica.setHorizontalAlignment(SwingConstants.CENTER);
+		etiquetaHeuristica.setFont(new Font("Calibri", Font.BOLD, 19));
+		etiquetaHeuristica.setBounds(436, 89, 254, 27);
+		panelPrincipal.add(etiquetaHeuristica);
 	}
 
-	private int getIdByNombre(String nombre) {
-		for (Persona persona : generador.getListaPersonas()) {
-			if (persona.getNombre().equals(nombre)) {
-				return persona.getId();
-			}
-		}
-		return -1;
+	private void generarPaneles() {
+		panelPrincipal = new JPanel();
+		panelPrincipal.setBounds(0, 0, 756, 615);
+		frame.getContentPane().add(panelPrincipal);
+		panelPrincipal.setLayout(null);
+		
+		panelFuerzaBruta = new JPanel(new GridLayout(0, 2));
+		JScrollPane panelFuerzaBrutaDeslizable= new JScrollPane(panelFuerzaBruta);
+		panelFuerzaBrutaDeslizable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		panelFuerzaBrutaDeslizable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panelFuerzaBrutaDeslizable.setBounds(10, 127, 345, 310);
+		panelPrincipal.add(panelFuerzaBrutaDeslizable);
+		
+	
+		panelHeuristica = new JPanel(new GridLayout(0, 2));
+		JScrollPane panelHeuristicaDeslizable= new JScrollPane(panelHeuristica);
+		panelHeuristicaDeslizable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		panelHeuristicaDeslizable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panelHeuristicaDeslizable.setBounds(389, 127, 357, 310);
+		panelPrincipal.add(panelHeuristicaDeslizable);
 	}
-
-	private Persona getpersonaById(int id) {
-		for (Persona persona : generador.getListaPersonas()) {
-			if (persona.getId() == id) {
-				return persona;
-			}
+	
+	private void mostrarResultadoFuerzaBruta() {
+		for(Persona persona: grupoFuerzaBruta) {
+			JLabel labelFoto= new JLabel();
+			labelFoto.setIcon(persona.getFotoDePerfil());
+			labelFoto.setHorizontalAlignment(JLabel.CENTER);
+			JLabel labelDatos= new JLabel(persona.getNombre() + " , " + persona.getRol().toString());
+			labelDatos.setHorizontalAlignment(JLabel.CENTER);
+			JPanel panelParticular= new JPanel(new BorderLayout());
+			panelParticular.add(labelFoto,BorderLayout.CENTER);
+			panelParticular.add(labelDatos,BorderLayout.SOUTH);
+			panelFuerzaBruta.add(panelParticular);
+			
 		}
-		return null;
+	}
+	
+	private void mostrarResultadoHeuristica() {
+		for(Persona persona: grupoHeuristica) {
+			JLabel labelFoto= new JLabel();
+			labelFoto.setIcon(persona.getFotoDePerfil());
+			labelFoto.setHorizontalAlignment(JLabel.CENTER);
+			JLabel labelDatos= new JLabel(persona.getNombre() + " , " + persona.getRol().toString());
+			labelDatos.setHorizontalAlignment(JLabel.CENTER);
+			JPanel panelParticular= new JPanel(new BorderLayout());
+			panelParticular.add(labelFoto,BorderLayout.CENTER);
+			panelParticular.add(labelDatos,BorderLayout.SOUTH);
+			panelHeuristica.add(panelParticular);
+			
+		}
+	}
+	
+	public void guardarGrupoEnArchivo(Set<Persona> grupoFuerzaBruta,Set<Persona> grupoHeuristica, String nombreArchivo) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo + ".txt"))) {
+	        writer.write("Grupo Solucion (Fuerza Bruta)");
+	        writer.newLine();
+	    	for (Persona persona : grupoFuerzaBruta) {
+	            writer.write("Nombre: " + persona.getNombre() + ", Rol: " + persona.getRol().toString() + ", Calif.Historica: " + persona.getRendimiento());
+	            writer.newLine();
+	        }
+	    	writer.newLine();
+	    	
+	    	writer.write("Grupo Solucion (Heuristica)");
+	        writer.newLine();
+	        for (Persona persona : grupoHeuristica) {
+	            writer.write("Nombre: " + persona.getNombre() + ", Rol: " + persona.getRol().toString() + ", Calif.Historica: " + persona.getRendimiento());
+	            writer.newLine();
+	        }
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		if (e.getSource() == botonListo) {
-			confirmarRequerimiento();
+		if(e.getSource()==botonGuardarResultados) {
+			String resultado=JOptionPane.showInputDialog(null, "Como va a llamar al archivo?","Guardar", JOptionPane.PLAIN_MESSAGE);
+			guardarGrupoEnArchivo(grupoFuerzaBruta, grupoHeuristica, resultado);
 		}
-
-		if (e.getSource() == botonLimpiar) {
-			limpiarSeleccion();
-		}
-
-		if (e.getSource() == botonAgregar) {
-			cargarEmpleado();
-		}
-
-		if (e.getSource() == botonAgregarIncompatibilidad) {
-			agregarIncompatibilidad();
-		}
-
-		if (e.getSource() == botonVerIncompatibilidad) {
-			mostrarIncompatibilidades(listaDeEmpleados.getSelectedValue().getId());
-		}
-		if (e.getSource() == botonGenerarGrupo) {
-			mostrarGrupoGenerado();
-		}
-	}
-
-	private void mostrarGrupoGenerado() {
-		Set<Persona> resultadoFuerzaBruta= generador.generarMejorEquipo();
-		Set<Persona> resultadoHeuristica= generador.generarMejorEquipoHeuristico();
-
-		VentanaGrupo ventana= new VentanaGrupo(resultadoFuerzaBruta,resultadoHeuristica);
-	}
-
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		mostrarSeleccion();
-	}
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EquipoIdeal window = new EquipoIdeal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
 	}
 }
