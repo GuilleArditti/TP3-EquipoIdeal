@@ -125,16 +125,13 @@ public class GeneradorGrupoMejorCalificado {
 
 		return solver.getCantRecursiones();
 	}
-	
-	
+		
 
 	private void guardarCronometroFuerzaBruta() {
 		tiempoFuerzaBruta=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
 	}
-	
-	//Cambiar el metodo para obtener bien la estadistica de heuristica, se esta mostrando solo fuerza bruta
-	
+		
 	private void guardarCronometroHeuristica() {
 		tiempoHeuristica=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");

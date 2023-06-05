@@ -19,12 +19,6 @@ public class SimulacionFuerzaBruta extends SwingWorker<Set<Persona>, Long>{
 		this.generador=generador;
 	}
 
-//	@Override
-//	protected Set<Persona> doInBackground() throws Exception {
-//		barraDeProgreso.setIndeterminate(true);
-//		resultadoFuerzaBruta=generador.generarMejorEquipo();		
-//		return resultadoFuerzaBruta;
-//	}
 
 	@Override
 	protected Set<Persona> doInBackground() throws Exception {
@@ -43,17 +37,5 @@ public class SimulacionFuerzaBruta extends SwingWorker<Set<Persona>, Long>{
 		return resultadoFuerzaBruta;
 	}
 	
-//	@Override
-//	public void done() {
-//		
-//		try {
-//			if(this.isCancelled()==false){
-//				barraDeProgreso.setIndeterminate(false);
-//				barraDeProgreso.setStringPainted(true);
-//			}
-//		} catch (Exception e) {
-//			
-//		}
-//	}
 
 }
