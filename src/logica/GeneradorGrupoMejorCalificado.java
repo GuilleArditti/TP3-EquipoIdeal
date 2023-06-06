@@ -15,9 +15,9 @@ public class GeneradorGrupoMejorCalificado {
 	private Requerimiento requeridos;
 	private Solver solver;
 	private SolverHeuristico solverH;
-	private long initialTime;
 	private String tiempoFuerzaBruta;
 	private String tiempoHeuristica;
+	private long initialTime;
 
 	public GeneradorGrupoMejorCalificado() {
 		personas = new ArrayList<>();
@@ -25,24 +25,16 @@ public class GeneradorGrupoMejorCalificado {
 	}
 
 	public void agregarPersona(Persona p) {
-		if(!personas.contains(p)) {
+		if (!personas.contains(p)) {
 			personas.add(p);
 			incompatibles.add(new ArrayList<>());
-		}
-		else {
+		} else
 			throw new IllegalArgumentException("No se permite agregar personas repetidas");
-		}
 	}
 
 	public void agregarPersona(int rendimiento, String nombre, Rol rol) {
-		Persona persona= new Persona(personas.size(), rendimiento, nombre, rol);
-		if(!personas.contains(persona)) {
-			personas.add(persona);
-			incompatibles.add(new ArrayList<>());
-		}
-		else {
-			throw new IllegalArgumentException("No se permite agregar personas repetidas");
-		}
+		Persona persona = new Persona(personas.size(), rendimiento, nombre, rol);
+		this.agregarPersona(persona);
 	}
 
 	public void agregarIncompatibilidad(int id, int idIncompatible) {
@@ -54,32 +46,6 @@ public class GeneradorGrupoMejorCalificado {
 
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
-	}
-
-	public boolean cumpleRequerimientos() {
-		int cantArquitectos = 0;
-		int cantLiderProyecto = 0;
-		int cantTesters = 0;
-		int cantProgramadores = 0;
-		for (Persona persona : personas) {
-			switch (persona.getRol()) {
-			case LIDER_DE_PROYECTO:
-				cantLiderProyecto++;
-				break;
-			case ARQUITECTO:
-				cantArquitectos++;
-				break;
-			case PROGRAMADOR:
-				cantProgramadores++;
-				break;
-			case TESTER:
-				cantTesters++;
-				break;
-			}
-		}
-		return requeridos.getCantArquitectos() <= cantArquitectos
-				&& requeridos.getCantLiderProyecto() <= cantLiderProyecto && requeridos.getCantTesters() <= cantTesters
-				&& requeridos.getCantProgramadores() <= cantProgramadores;
 	}
 
 	public Set<Persona> generarMejorEquipo() {
@@ -108,6 +74,36 @@ public class GeneradorGrupoMejorCalificado {
 		System.out.print("Heuristica: ");
 		guardarCronometroHeuristica();
 		return solverH.getGrupoSolucion().getPersonas();
+	}
+	
+	/* Metodos auxiliares */
+
+	public boolean cumpleRequerimientos() {
+		int cantArquitectos = 0;
+		int cantLiderProyecto = 0;
+		int cantTesters = 0;
+		int cantProgramadores = 0;
+
+		for (Persona persona : personas) {
+			switch (persona.getRol()) {
+			case LIDER_DE_PROYECTO:
+				cantLiderProyecto++;
+				break;
+			case ARQUITECTO:
+				cantArquitectos++;
+				break;
+			case PROGRAMADOR:
+				cantProgramadores++;
+				break;
+			case TESTER:
+				cantTesters++;
+				break;
+			}
+		}
+
+		return requeridos.getCantArquitectos() <= cantArquitectos
+				&& requeridos.getCantLiderProyecto() <= cantLiderProyecto && requeridos.getCantTesters() <= cantTesters
+				&& requeridos.getCantProgramadores() <= cantProgramadores;
 	}
 
 	public List<Persona> getListaPersonas() {
@@ -159,10 +155,10 @@ public class GeneradorGrupoMejorCalificado {
 			throw new IllegalArgumentException("ID no valido: " + id);
 		if (idIncompatible >= incompatibles.size() || idIncompatible < 0)
 			throw new IllegalArgumentException("ID no valido: " + idIncompatible);
-		if(id==idIncompatible) {
+		if (id == idIncompatible) {
 			throw new IllegalArgumentException("Una persona no puede ser incompatible consigo misma");
 		}
-		if(incompatibles.get(id).contains(idIncompatible) || incompatibles.get(idIncompatible).contains(id)) {
+		if (incompatibles.get(id).contains(idIncompatible) || incompatibles.get(idIncompatible).contains(id)) {
 			throw new RuntimeException("La incompatibilidad ya fue agregada anteriormente");
 		}
 	}

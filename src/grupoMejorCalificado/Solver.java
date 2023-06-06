@@ -25,8 +25,8 @@ public class Solver extends Thread {
 		generarMejorEquipo();
 	}
 
-	public void generarMejorEquipo(){
-		
+	public void generarMejorEquipo() {
+
 		actual = new Grupo();
 		grupoMayorPuntuacion = new Grupo();
 		setCantRecursiones(1);
@@ -55,6 +55,8 @@ public class Solver extends Thread {
 		cantRecursiones++;
 		generarDesde(id + 1);
 	}
+	
+	/* Metodos auxiliares */
 
 	public boolean cumpleTodosRequisitos() {
 		return actual.getCantLiderProyecto() == requeridos.getCantLiderProyecto()

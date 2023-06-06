@@ -61,8 +61,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	private SimulacionFuerzaBruta simulacionFuerzaBruta;
 	private Set<Persona> solucionFuerzaBruta;
 	private Set<Persona> solucionHeuristica;
-	
-	
+
 	public VentanaPrincipal() {
 		initialize();
 	}
@@ -72,9 +71,9 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		setupFrame();
 
 		generarCuadroDeRequerimientos();
-		
+
 		generarListaDeEmpleados();
-		
+
 		generarPanelDeDetalles();
 
 		generarBotones();
@@ -93,8 +92,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 	}
-	
-	
+
 	private void generarCuadroDeRequerimientos() {
 
 		panelDeRequerimientos = new JPanel();
@@ -155,14 +153,13 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		etiquetaRequerimientos.setFont(new Font("Calibri", Font.BOLD, 18));
 
 	}
-	
-	
+
 	private void generarListaDeEmpleados() {
 		listaDeEmpleados = new JList<Persona>();
 		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		JScrollPane listaDeEmpleadosDeslizable= new JScrollPane(listaDeEmpleados);
+		JScrollPane listaDeEmpleadosDeslizable = new JScrollPane(listaDeEmpleados);
 		listaDeEmpleadosDeslizable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		listaDeEmpleadosDeslizable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);		
+		listaDeEmpleadosDeslizable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		listaDeEmpleadosDeslizable.setBounds(10, 235, 229, 273);
 		listaDeEmpleados.addListSelectionListener(this);
 		frame.getContentPane().add(listaDeEmpleadosDeslizable);
@@ -196,7 +193,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		etiquetaRol = new JLabel("");
 		etiquetaRol.setBounds(10, 130, 198, 25);
 		panelDetalles.add(etiquetaRol);
-		
+
 		botonVerIncompatibilidad = new JButton("Ver incompatibilidad");
 		botonVerIncompatibilidad.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		botonVerIncompatibilidad.setBounds(10, 239, 185, 23);
@@ -210,7 +207,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		etiqueta.setBounds(375, 201, 89, 17);
 		frame.getContentPane().add(etiqueta);
 	}
-	
+
 	private void generarBotones() {
 		botonGenerarGrupo = new JButton("Generar grupo");
 		botonGenerarGrupo.setEnabled(false);
@@ -240,7 +237,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		botonAgregarIncompatibilidad.setFont(new Font("Calibri", Font.BOLD, 15));
 		botonAgregarIncompatibilidad.setBounds(10, 559, 193, 23);
 		frame.getContentPane().add(botonAgregarIncompatibilidad);
-		
+
 		botonVerEquipo = new JButton("Ver equipo!");
 		botonVerEquipo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		botonVerEquipo.setActionCommand("\r\nVer equipo!");
@@ -249,14 +246,14 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		botonVerEquipo.setBounds(153, 731, 139, 23);
 		botonVerEquipo.setEnabled(false);
 		frame.getContentPane().add(botonVerEquipo);
-		
+
 		botonListo = new JButton("Listo");
 		botonListo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		botonListo.setFont(new Font("Calibri", Font.BOLD, 15));
 		botonListo.setBounds(264, 476, 89, 32);
 		botonListo.addActionListener(this);
 		frame.getContentPane().add(botonListo);
-		
+
 		botonEstadisticas = new JButton("Estadisticas");
 		botonEstadisticas.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		botonEstadisticas.setFont(new Font("Calibri", Font.BOLD, 15));
@@ -265,18 +262,20 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		botonEstadisticas.setBounds(348, 731, 115, 23);
 		frame.getContentPane().add(botonEstadisticas);
 	}
-	
+
 	private void generarBarraDeProgreso() {
-		barraDeProgreso = new JProgressBar();	
+		barraDeProgreso = new JProgressBar();
 		barraDeProgreso.setEnabled(false);
 		barraDeProgreso.setBounds(153, 686, 310, 23);
 		frame.getContentPane().add(barraDeProgreso);
 	}
-	
+
 	private void confirmarRequerimiento() {
-		int resultado = JOptionPane.showConfirmDialog(null, "Confirma armado del equipo con: \n"
-						+ spinnerLider.getValue() + " Lideres \n" + spinnerArquitecto.getValue() + " Arquitectos \n" 
-						+ spinnerProgramador.getValue() + " Programadores \n" +spinnerTester.getValue() + " Testers?", "Confirmar", 0);
+		int resultado = JOptionPane.showConfirmDialog(null,
+				"Confirma armado del equipo con: \n" + spinnerLider.getValue() + " Lideres \n"
+						+ spinnerArquitecto.getValue() + " Arquitectos \n" + spinnerProgramador.getValue()
+						+ " Programadores \n" + spinnerTester.getValue() + " Testers?",
+				"Confirmar", 0);
 		if (resultado == 0) {
 			generador = new GeneradorGrupoMejorCalificado();
 			generador.setRequerimientos((int) spinnerLider.getValue(), (int) spinnerArquitecto.getValue(),
@@ -287,7 +286,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 			panelDeRequerimientos.remove(spinnerTester);
 			botonEstablecer.setBackground(new Color(180, 255, 180));
 			botonEstablecer.setEnabled(false);
-			etiquetaRequerimientos.setText("Requerimientos:");	
+			etiquetaRequerimientos.setText("Requerimientos:");
 		}
 	}
 
@@ -310,7 +309,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 					mostrarEmpleadoEnLista(persona);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", 0);
-					persona=null;
+					persona = null;
 				}
 
 			} else {
@@ -322,7 +321,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 					"Advertencia", 0);
 		}
 	}
-	
+
 	private void elegirFoto(Persona p) {
 		int entrada = JOptionPane.showConfirmDialog(null, "Desea agregar una foto para " + p.getNombre() + "?",
 				"Subir foto", 0);
@@ -346,8 +345,8 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 			}
 		} else {
 			Image image = new ImageIcon("FotosEmpleados/fotoPorDefault.png").getImage();
-			ImageIcon iconredimensionado = new ImageIcon(image.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(),
-					Image.SCALE_DEFAULT));
+			ImageIcon iconredimensionado = new ImageIcon(
+					image.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
 			p.setFotoDePerfil(iconredimensionado);
 		}
 	}
@@ -391,24 +390,23 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	}
 
 	private void mostrarSeleccion() {
-		etiquetaRendimiento.setText("Calif.Historica: " + String.valueOf(listaDeEmpleados.getSelectedValue().getRendimiento()));
+		etiquetaRendimiento
+				.setText("Calif.Historica: " + String.valueOf(listaDeEmpleados.getSelectedValue().getRendimiento()));
 		etiquetaNombre.setText(listaDeEmpleados.getSelectedValue().getNombre());
 		etiquetaRol.setText("Rol actual: " + listaDeEmpleados.getSelectedValue().getRol().toString());
 		botonVerIncompatibilidad.setEnabled(true);
 		labelFoto.setIcon(listaDeEmpleados.getSelectedValue().getFotoDePerfil());
 	}
-	
+
 	private void mostrarIncompatibilidades(int id) {
-		if(generador.getIncompatibilidadesById(id).isEmpty()) {
-			JOptionPane.showMessageDialog(null,
-					"El empleado no tiene incompatibilidades", "Informaci�n",
+		if (generador.getIncompatibilidadesById(id).isEmpty()) {
+			JOptionPane.showMessageDialog(null, "El empleado no tiene incompatibilidades", "Informaci�n",
 					JOptionPane.INFORMATION_MESSAGE);
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(null, personasIncompatiblesDeUnId(id),
 					getpersonaById(id).getNombre() + " es incompatible con: ", JOptionPane.PLAIN_MESSAGE);
 		}
-		
+
 	}
 
 	private String personasIncompatiblesDeUnId(int id) {
@@ -441,11 +439,11 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == botonEstablecer) {
 			confirmarRequerimiento();
 		}
-		
+
 		if (e.getSource() == botonAgregarEmpleado) {
 			cargarEmpleado();
 		}
@@ -457,22 +455,23 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		if (e.getSource() == botonVerIncompatibilidad) {
 			mostrarIncompatibilidades(listaDeEmpleados.getSelectedValue().getId());
 		}
-		
-		if(e.getSource()==botonListo) {
+
+		if (e.getSource() == botonListo) {
 			chequearRequisitos();
 		}
-		
+
 		if (e.getSource() == botonGenerarGrupo) {
 			generarSolucion();
 		}
-		
-		if(e.getSource()==botonVerEquipo) {
+
+		if (e.getSource() == botonVerEquipo) {
 			@SuppressWarnings("unused")
-			EquipoIdeal ventana= new EquipoIdeal(solucionFuerzaBruta,solucionHeuristica);
+			EquipoIdeal ventana = new EquipoIdeal(solucionFuerzaBruta, solucionHeuristica);
 		}
-		
-		if(e.getSource()==botonEstadisticas) {
-			JOptionPane.showMessageDialog(null, generador.getEstadisticas(), "Estadisticas", JOptionPane.PLAIN_MESSAGE, null);
+
+		if (e.getSource() == botonEstadisticas) {
+			JOptionPane.showMessageDialog(null, generador.getEstadisticas(), "Estadisticas", JOptionPane.PLAIN_MESSAGE,
+					null);
 		}
 	}
 
@@ -483,16 +482,16 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		}
 		if (!generador.cumpleRequerimientos()) {
 			JOptionPane.showMessageDialog(null, "Aun hay roles sin cubrir! Revise la planilla de empleados",
-					"Advertencia", 0);	
-		}
-		else {
-			int resultado = JOptionPane.showConfirmDialog(null, "Termino de ingresar a los empleados?", "Confirmar lista", 0);
+					"Advertencia", 0);
+		} else {
+			int resultado = JOptionPane.showConfirmDialog(null, "Termino de ingresar a los empleados?",
+					"Confirmar lista", 0);
 			if (resultado == 0) {
 				cambiarEstadoBotones();
 			}
 		}
 	}
-		
+
 	private void cambiarEstadoBotones() {
 		botonEstablecer.setEnabled(false);
 		botonAgregarEmpleado.setEnabled(false);
@@ -502,25 +501,24 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	}
 
 	private void generarSolucion() {
-		simulacionFuerzaBruta= new SimulacionFuerzaBruta(barraDeProgreso, generador);
+		simulacionFuerzaBruta = new SimulacionFuerzaBruta(barraDeProgreso, generador);
 		simulacionFuerzaBruta.execute();
 		try {
-			solucionFuerzaBruta=simulacionFuerzaBruta.get();
+			solucionFuerzaBruta = simulacionFuerzaBruta.get();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		solucionHeuristica=generador.generarMejorEquipoHeuristico();
+		solucionHeuristica = generador.generarMejorEquipoHeuristico();
 		botonGenerarGrupo.setEnabled(false);
 		botonVerEquipo.setEnabled(true);
 		botonEstadisticas.setEnabled(true);
 	}
-			
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		mostrarSeleccion();
 	}
-	
+
 	/**
 	 * Launch the application.
 	 */

@@ -43,6 +43,8 @@ public class SolverHeuristico extends Thread {
 		if (!tieneCantEspecialistasRequerida())
 			throw new RuntimeException("No hay suficientes especialistas para cubrir los puestos.");
 	}
+	
+	/* Metodos auxiliares */
 
 	private void seleccionarLosMejores(List<Persona> lideresProyecto, List<Persona> arquitectos,
 			List<Persona> programadores, List<Persona> testers) {
