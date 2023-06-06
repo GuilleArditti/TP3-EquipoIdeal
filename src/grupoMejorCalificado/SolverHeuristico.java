@@ -13,7 +13,6 @@ public class SolverHeuristico extends Thread {
 	private List<Persona> personas;
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
-	private Grupo actual;
 	private Grupo grupoSolucion;
 
 	public SolverHeuristico(List<Persona> personas, List<List<Integer>> incompatibles, Requerimiento requeridos) {
@@ -134,14 +133,6 @@ public class SolverHeuristico extends Thread {
 
 	public void setRequeridos(Requerimiento requeridos) {
 		this.requeridos = requeridos;
-	}
-
-	public Grupo getActual() {
-		return actual;
-	}
-
-	public void setActual(Grupo actual) {
-		this.actual = actual;
 	}
 
 	public Grupo getGrupoSolucion() {
