@@ -14,6 +14,7 @@ public class GeneradorGrupoMejorCalificado {
 	private List<List<Integer>> incompatibles;
 	private Requerimiento requeridos;
 	private Solver solver;
+	private SolverHeuristico solverH;
 	private long initialTime;
 	private String tiempoFuerzaBruta;
 	private String tiempoHeuristica;
@@ -43,7 +44,7 @@ public class GeneradorGrupoMejorCalificado {
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
 	}
-
+/*
 	public boolean cumpleRequerimientos() {
 		int cantArquitectos = 0;
 		int cantLiderProyecto = 0;
@@ -68,7 +69,7 @@ public class GeneradorGrupoMejorCalificado {
 		return requeridos.getCantArquitectos() <= cantArquitectos
 				&& requeridos.getCantLiderProyecto() <= cantLiderProyecto && requeridos.getCantTesters() <= cantTesters
 				&& requeridos.getCantProgramadores() <= cantProgramadores;
-	}
+	}*/
 
 	public Set<Persona> generarMejorEquipo() {
 		iniciarCronometro();
@@ -86,7 +87,7 @@ public class GeneradorGrupoMejorCalificado {
 
 	public Set<Persona> generarMejorEquipoHeuristico() {
 		iniciarCronometro();
-		SolverHeuristico solverH = new SolverHeuristico(personas, incompatibles, requeridos);
+		solverH = new SolverHeuristico(personas, incompatibles, requeridos);
 		solverH.start();
 		try {
 			solverH.join();

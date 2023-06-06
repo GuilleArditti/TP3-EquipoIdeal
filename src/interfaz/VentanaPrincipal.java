@@ -396,7 +396,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	private void mostrarIncompatibilidades(int id) {
 		if(generador.getIncompatibilidadesById(id).isEmpty()) {
 			JOptionPane.showMessageDialog(null,
-					"El empleado no tiene incompatibilidades", "Información",
+					"El empleado no tiene incompatibilidades", "Informaciï¿½n",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
@@ -475,12 +475,12 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		if (generador == null) {
 			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!",
 					"Advertencia", 0);
-		}
+		}/*
 		if (!generador.cumpleRequerimientos()) {
 			JOptionPane.showMessageDialog(null, "Aun hay roles sin cubrir! Revise la planilla de empleados",
-					"Advertencia", 0);
-			
-		} else {
+					"Advertencia", 0);	
+		}*/
+		else {
 			int resultado = JOptionPane.showConfirmDialog(null, "Termino de ingresar a los empleados?", "Confirmar lista", 0);
 			if (resultado == 0) {
 				cambiarEstadoBotones();
