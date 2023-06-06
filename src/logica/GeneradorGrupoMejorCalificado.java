@@ -43,13 +43,13 @@ public class GeneradorGrupoMejorCalificado {
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
 	}
-	
+
 	public boolean cumpleRequerimientos() {
-		int cantArquitectos=0;
-		int cantLiderProyecto=0;
-		int cantTesters=0;
-		int cantProgramadores=0;
-		for(Persona persona: personas) {
+		int cantArquitectos = 0;
+		int cantLiderProyecto = 0;
+		int cantTesters = 0;
+		int cantProgramadores = 0;
+		for (Persona persona : personas) {
 			switch (persona.getRol()) {
 			case LIDER_DE_PROYECTO:
 				cantLiderProyecto++;
@@ -65,8 +65,9 @@ public class GeneradorGrupoMejorCalificado {
 				break;
 			}
 		}
-		return requeridos.getCantArquitectos()<=cantArquitectos && requeridos.getCantLiderProyecto()<=cantLiderProyecto
-				&& requeridos.getCantTesters()<=cantTesters && requeridos.getCantProgramadores()<=cantProgramadores;
+		return requeridos.getCantArquitectos() <= cantArquitectos
+				&& requeridos.getCantLiderProyecto() <= cantLiderProyecto && requeridos.getCantTesters() <= cantTesters
+				&& requeridos.getCantProgramadores() <= cantProgramadores;
 	}
 
 	public Set<Persona> generarMejorEquipo() {
@@ -112,11 +113,12 @@ public class GeneradorGrupoMejorCalificado {
 	public Requerimiento getRequerimientos() {
 		return requeridos;
 	}
-	
+
 	public String getEstadisticas() {
-		String cantRecursiones= "Cantidad de recursiones:" + getCantRecursiones();
-		String tiempoEjecucion= "Tiempo de ejecucion:" + tiempoFuerzaBruta;
-		return "Fuerza Bruta: " + "\n" + cantRecursiones + "\n" + tiempoEjecucion + "\n\n" + "Heuristica: " +tiempoHeuristica;
+		String cantRecursiones = "Cantidad de recursiones:" + getCantRecursiones();
+		String tiempoEjecucion = "Tiempo de ejecucion:" + tiempoFuerzaBruta;
+		return "Fuerza Bruta: " + "\n" + cantRecursiones + "\n" + tiempoEjecucion + "\n\n" + "Heuristica: "
+				+ tiempoHeuristica;
 	}
 
 	public int getCantRecursiones() {
@@ -125,22 +127,20 @@ public class GeneradorGrupoMejorCalificado {
 
 		return solver.getCantRecursiones();
 	}
-		
 
 	private void guardarCronometroFuerzaBruta() {
-		tiempoFuerzaBruta=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
+		tiempoFuerzaBruta = (System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
 	}
-		
+
 	private void guardarCronometroHeuristica() {
-		tiempoHeuristica=(System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
+		tiempoHeuristica = (System.currentTimeMillis() - initialTime) / 1000.0 + " seg.";
 		System.out.println((System.currentTimeMillis() - initialTime) / 1000.0 + " seg.");
 	}
 
 	private void iniciarCronometro() {
 		initialTime = System.currentTimeMillis();
 	}
-	
 
 	private void validarID(int id, int idIncompatible) {
 		if (id >= incompatibles.size() || id < 0)
