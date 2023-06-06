@@ -83,7 +83,7 @@ public class Grupo {
 		return cantLiderProyecto;
 	}
 
-	public void setCantLiderProyecto(int cantLiderProyecto) {
+	private void setCantLiderProyecto(int cantLiderProyecto) {
 		this.cantLiderProyecto = cantLiderProyecto;
 	}
 
@@ -91,7 +91,7 @@ public class Grupo {
 		return cantArquitectos;
 	}
 
-	public void setCantArquitectos(int cantArquitectos) {
+	private void setCantArquitectos(int cantArquitectos) {
 		this.cantArquitectos = cantArquitectos;
 	}
 
@@ -99,7 +99,7 @@ public class Grupo {
 		return cantProgramadores;
 	}
 
-	public void setCantProgramadores(int cantProgramadores) {
+	private void setCantProgramadores(int cantProgramadores) {
 		this.cantProgramadores = cantProgramadores;
 	}
 
@@ -107,7 +107,7 @@ public class Grupo {
 		return cantTesters;
 	}
 
-	public void setCantTesters(int cantTesters) {
+	private void setCantTesters(int cantTesters) {
 		this.cantTesters = cantTesters;
 	}
 
@@ -115,7 +115,7 @@ public class Grupo {
 		return tamano;
 	}
 
-	public void setTamano(int tamanoGrupo) {
+	private void setTamano(int tamanoGrupo) {
 		this.tamano = tamanoGrupo;
 	}
 
@@ -123,7 +123,7 @@ public class Grupo {
 		return personas;
 	}
 
-	public void setPersonas(Set<Persona> personas) {
+	private void setPersonas(Set<Persona> personas) {
 		this.personas = personas;
 	}
 
@@ -131,7 +131,7 @@ public class Grupo {
 		return puntuacion;
 	}
 
-	public void setPuntuacion(int puntuacion) {
+	private void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
 	}
 }
