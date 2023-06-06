@@ -51,6 +51,15 @@ public class GeneradorGrupoMejorCalificadoTest {
 	}
 	
 	//Nuevo
+		@Test(expected = RuntimeException.class)
+		public void agregarIncompatibilidadRepetidaTest() {
+			generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+			generador.agregarPersona(4, "Eusebio Zamora", Rol.TESTER);
+			generador.agregarIncompatibilidad(0, 1);
+			generador.agregarIncompatibilidad(1, 0);
+		}
+	
+	//Nuevo
 	@Test
 	public void EquipoIncompletoTest() {
 		generador.setRequerimientos(1, 1, 3, 2);

@@ -160,7 +160,10 @@ public class GeneradorGrupoMejorCalificado {
 		if (idIncompatible >= incompatibles.size() || idIncompatible < 0)
 			throw new IllegalArgumentException("ID no valido: " + idIncompatible);
 		if(id==idIncompatible) {
-			throw new IllegalArgumentException("Los ID deben ser todos distintos entre sí");
+			throw new IllegalArgumentException("Una persona no puede ser incompatible consigo misma");
+		}
+		if(incompatibles.get(id).contains(idIncompatible) || incompatibles.get(idIncompatible).contains(id)) {
+			throw new RuntimeException("La incompatibilidad ya fue agregada anteriormente");
 		}
 	}
 }

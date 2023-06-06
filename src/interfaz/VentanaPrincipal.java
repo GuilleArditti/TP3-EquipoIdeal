@@ -362,20 +362,15 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 					JOptionPane.PLAIN_MESSAGE, null, generador.getListaPersonas().toArray(), null);
 			Persona p2 = (Persona) JOptionPane.showInputDialog(null, p1.getNombre() + " es incompatible con...",
 					"Incompatibilidad", JOptionPane.PLAIN_MESSAGE, null, generador.getListaPersonas().toArray(), null);
-			if (p1.getNombre().equals(p2.getNombre())) {
-				JOptionPane.showMessageDialog(null, "Un empleado no puede ser incompatible consigo mismo", "Error", 0);
-			} else {
-				if (!generador.getIncompatibilidadesById(p1.getId()).contains(p2.getId())) {
-					generador.agregarIncompatibilidad(getIdByNombre(p1.getNombre()), getIdByNombre(p2.getNombre()));
-					JOptionPane.showMessageDialog(null,
-							"Se agrego la incompatibilidad " + p1.getNombre() + " - " + p2.getNombre(), "Exito",
-							JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "La incompatibilidad " + p1.getNombre() + " - " + p2.getNombre()
-							+ " ya fue agregada anteriormente!", "Error", 0);
-				}
-
+			try {
+				generador.agregarIncompatibilidad(getIdByNombre(p1.getNombre()), getIdByNombre(p2.getNombre()));
+				JOptionPane.showMessageDialog(null,
+						"Se agrego la incompatibilidad " + p1.getNombre() + " - " + p2.getNombre(), "Exito",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Error", 0);
 			}
+
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Se debe tener al menos 2 empleados en la lista para agregar una incompatibilidad", "Advertencia",
