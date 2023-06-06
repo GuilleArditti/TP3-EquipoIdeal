@@ -23,6 +23,13 @@ public class GeneradorGrupoMejorCalificadoTest {
 		generador.agregarPersona(4, "Juan Gomez", Rol.ARQUITECTO);
 		assertEquals(generador.getListaPersonas().size(), 2);
 	}
+	
+	//Nuevo
+	@Test (expected = IllegalArgumentException.class)
+	public void agregarPersonaRepetidaTest() {
+		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+	}
 
 	@Test
 	public void agregarIncompatibilidadTest() {
@@ -32,6 +39,34 @@ public class GeneradorGrupoMejorCalificadoTest {
 		assertTrue(generador.getIncompatibilidadesById(0).contains(1));
 		assertTrue(generador.getIncompatibilidadesById(1).contains(0));
 	}
+	
+	//Nuevo
+	@Test(expected = IllegalArgumentException.class)
+	public void agregarIncompatibilidadIncorrectaTest() {
+		generador.agregarPersona(5, "Juan Perez", Rol.PROGRAMADOR);
+		generador.agregarPersona(4, "Eusebio Zamora", Rol.TESTER);
+		generador.agregarIncompatibilidad(0, 2);
+		generador.agregarIncompatibilidad(-1, 2);
+		generador.agregarIncompatibilidad(0, 0);
+	}
+	
+	//Nuevo
+	@Test
+	public void EquipoIncompletoTest() {
+		generador.setRequerimientos(1, 1, 3, 2);
+		
+		generador.agregarPersona(4, "Lider1", Rol.LIDER_DE_PROYECTO);
+
+		generador.agregarPersona(3, "Arquitecto1", Rol.ARQUITECTO);
+
+		generador.agregarPersona(3, "Dev1", Rol.PROGRAMADOR);
+		generador.agregarPersona(4, "Dev2", Rol.PROGRAMADOR);
+		generador.agregarPersona(5, "Dev3", Rol.PROGRAMADOR);
+
+		generador.agregarPersona(4, "Tester3", Rol.TESTER);
+		assertFalse(generador.cumpleRequerimientos());
+	}
+	
 
 	@Test
 	public void generarMejorEquipoTest() {

@@ -25,7 +25,8 @@ public class Solver extends Thread {
 		generarMejorEquipo();
 	}
 
-	public void generarMejorEquipo() {
+	public void generarMejorEquipo(){
+		
 		actual = new Grupo();
 		grupoMayorPuntuacion = new Grupo();
 		setCantRecursiones(1);

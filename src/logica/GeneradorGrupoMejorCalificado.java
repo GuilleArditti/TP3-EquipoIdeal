@@ -25,13 +25,24 @@ public class GeneradorGrupoMejorCalificado {
 	}
 
 	public void agregarPersona(Persona p) {
-		personas.add(p);
-		incompatibles.add(new ArrayList<>());
+		if(!personas.contains(p)) {
+			personas.add(p);
+			incompatibles.add(new ArrayList<>());
+		}
+		else {
+			throw new IllegalArgumentException("No se permite agregar personas repetidas");
+		}
 	}
 
 	public void agregarPersona(int rendimiento, String nombre, Rol rol) {
-		personas.add(new Persona(personas.size(), rendimiento, nombre, rol));
-		incompatibles.add(new ArrayList<>());
+		Persona persona= new Persona(personas.size(), rendimiento, nombre, rol);
+		if(!personas.contains(persona)) {
+			personas.add(persona);
+			incompatibles.add(new ArrayList<>());
+		}
+		else {
+			throw new IllegalArgumentException("No se permite agregar personas repetidas");
+		}
 	}
 
 	public void agregarIncompatibilidad(int id, int idIncompatible) {
@@ -44,7 +55,7 @@ public class GeneradorGrupoMejorCalificado {
 	public void setRequerimientos(int cantLiderProyecto, int cantArquitectos, int cantDevelopers, int cantTesters) {
 		this.requeridos = new Requerimiento(cantLiderProyecto, cantArquitectos, cantDevelopers, cantTesters);
 	}
-/*
+
 	public boolean cumpleRequerimientos() {
 		int cantArquitectos = 0;
 		int cantLiderProyecto = 0;
@@ -69,7 +80,7 @@ public class GeneradorGrupoMejorCalificado {
 		return requeridos.getCantArquitectos() <= cantArquitectos
 				&& requeridos.getCantLiderProyecto() <= cantLiderProyecto && requeridos.getCantTesters() <= cantTesters
 				&& requeridos.getCantProgramadores() <= cantProgramadores;
-	}*/
+	}
 
 	public Set<Persona> generarMejorEquipo() {
 		iniciarCronometro();
@@ -145,8 +156,11 @@ public class GeneradorGrupoMejorCalificado {
 
 	private void validarID(int id, int idIncompatible) {
 		if (id >= incompatibles.size() || id < 0)
-			throw new RuntimeException("ID no válido: " + id);
-		if (idIncompatible >= incompatibles.size() || id < 0)
-			throw new RuntimeException("ID no válido: " + idIncompatible);
+			throw new IllegalArgumentException("ID no valido: " + id);
+		if (idIncompatible >= incompatibles.size() || idIncompatible < 0)
+			throw new IllegalArgumentException("ID no valido: " + idIncompatible);
+		if(id==idIncompatible) {
+			throw new IllegalArgumentException("Los ID deben ser todos distintos entre s�");
+		}
 	}
 }

@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Font;
@@ -49,7 +50,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	private JButton botonEstablecer;
 	private JButton botonVerEquipo;
 	private JButton botonEstadisticas;
-	private JProgressBar barraDeProgresoFuerzaBruta;
+	private JProgressBar barraDeProgreso;
 	private JPanel panelDeRequerimientos;
 	private JLabel etiquetaRequerimientos;
 	private JSpinner spinnerLider;
@@ -159,9 +160,12 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	private void generarListaDeEmpleados() {
 		listaDeEmpleados = new JList<Persona>();
 		listaDeEmpleados.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		listaDeEmpleados.setBounds(10, 235, 229, 273);
+		JScrollPane listaDeEmpleadosDeslizable= new JScrollPane(listaDeEmpleados);
+		listaDeEmpleadosDeslizable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		listaDeEmpleadosDeslizable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);		
+		listaDeEmpleadosDeslizable.setBounds(10, 235, 229, 273);
 		listaDeEmpleados.addListSelectionListener(this);
-		frame.getContentPane().add(listaDeEmpleados);
+		frame.getContentPane().add(listaDeEmpleadosDeslizable);
 
 		JLabel etiqueta = new JLabel("Lista de empleados:");
 		etiqueta.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -263,10 +267,10 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	}
 	
 	private void generarBarraDeProgreso() {
-		barraDeProgresoFuerzaBruta = new JProgressBar();	
-		barraDeProgresoFuerzaBruta.setEnabled(false);
-		barraDeProgresoFuerzaBruta.setBounds(153, 686, 310, 23);
-		frame.getContentPane().add(barraDeProgresoFuerzaBruta);
+		barraDeProgreso = new JProgressBar();	
+		barraDeProgreso.setEnabled(false);
+		barraDeProgreso.setBounds(153, 686, 310, 23);
+		frame.getContentPane().add(barraDeProgreso);
 	}
 	
 	private void confirmarRequerimiento() {
@@ -301,8 +305,14 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 						JOptionPane.PLAIN_MESSAGE, null, Rol.values(), null);
 				Persona persona = new Persona(generador.getListaPersonas().size(), rendimiento, nombre, rol);
 				elegirFoto(persona);
-				generador.agregarPersona(persona);
-				mostrarEmpleadoEnLista(persona);
+				try {
+					generador.agregarPersona(persona);
+					mostrarEmpleadoEnLista(persona);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", 0);
+					persona=null;
+				}
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Ingresar un nombre es obligatorio", "Advertencia",
 						JOptionPane.WARNING_MESSAGE);
@@ -475,11 +485,11 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		if (generador == null) {
 			JOptionPane.showMessageDialog(null, "Primero debe especificar los requerimientos del equipo!",
 					"Advertencia", 0);
-		}/*
+		}
 		if (!generador.cumpleRequerimientos()) {
 			JOptionPane.showMessageDialog(null, "Aun hay roles sin cubrir! Revise la planilla de empleados",
 					"Advertencia", 0);	
-		}*/
+		}
 		else {
 			int resultado = JOptionPane.showConfirmDialog(null, "Termino de ingresar a los empleados?", "Confirmar lista", 0);
 			if (resultado == 0) {
@@ -497,7 +507,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 	}
 
 	private void generarSolucion() {
-		simulacionFuerzaBruta= new SimulacionFuerzaBruta(barraDeProgresoFuerzaBruta, generador);
+		simulacionFuerzaBruta= new SimulacionFuerzaBruta(barraDeProgreso, generador);
 		simulacionFuerzaBruta.execute();
 		try {
 			solucionFuerzaBruta=simulacionFuerzaBruta.get();
@@ -509,6 +519,7 @@ public class VentanaPrincipal implements ActionListener, ListSelectionListener {
 		botonVerEquipo.setEnabled(true);
 		botonEstadisticas.setEnabled(true);
 	}
+			
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
